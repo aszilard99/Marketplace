@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.bazaar.R
 import com.example.bazaar.repository.Repository
 import com.example.bazaar.viewmodels.LoginViewModel
@@ -42,6 +43,13 @@ class LoginFragment : Fragment() {
             initializeView(view)
         }
 
+
+        //this observers the loginViewModel's token, and if it changes it navigates to timeLineFragment
+        //!!only observes the token change if we are on the LoginFragment screen, if we are on another fragment this stops/gets destroyed
+        loginViewModel.token.observe(viewLifecycleOwner){
+            findNavController().navigate(R.id.timelineFragment)
+        }
+
         return view
     }
 
@@ -57,6 +65,7 @@ class LoginFragment : Fragment() {
                     it.password = passwordET.text.toString()
                 }
             }
+            //launches Coroutine with its lifeCycle tied to LoginFragment
             lifecycleScope.launch {
                 loginViewModel.login()
             }
