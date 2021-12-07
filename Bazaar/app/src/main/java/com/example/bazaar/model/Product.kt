@@ -23,5 +23,10 @@ data class Product(
     val messages : List<String>
 )
 
+
 @JsonClass(generateAdapter = true)
 data class ProductResponse(val item_count: Int, val products: List<Product>, val timestamp: Long)
+
+
+@JsonClass(generateAdapter = true)
+data class ProductFilter(var title: String)

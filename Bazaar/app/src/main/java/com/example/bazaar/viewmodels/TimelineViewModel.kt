@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bazaar.MyApplication
 import com.example.bazaar.model.Product
+import com.example.bazaar.model.ProductFilter
 import com.example.bazaar.repository.Repository
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -28,6 +29,28 @@ class TimelineViewModel(private val repository: Repository) : ViewModel() {
                 Log.d("xxx", "ListViewModel - #products:  ${result.item_count}")
 
             }catch (e: Exception) {
+                Log.d("xxx", "ListViewMofdel exception: ${e.toString()}")
+
+            }
+        }
+    }
+
+    fun clearFilters(){
+        getProducts()
+    }
+    fun getFilteredProductsByTitle(title: String){
+        var filter = ProductFilter(title)
+        Log.d("xxx", filter.toString())
+        viewModelScope.launch{
+            try {
+
+
+                val result = repository.getProductsFilteredByTitle(MyApplication.token, filter)
+                products.value = result.products
+                Log.d("xxx", "ListViewModel - #products:  ${result.item_count}")
+
+            }catch (e: Exception) {
+
                 Log.d("xxx", "ListViewMofdel exception: ${e.toString()}")
 
             }
