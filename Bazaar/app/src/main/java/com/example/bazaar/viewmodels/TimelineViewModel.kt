@@ -38,8 +38,9 @@ class TimelineViewModel(private val repository: Repository) : ViewModel() {
     fun clearFilters(){
         getProducts()
     }
+    //TODO throws error when the title contains special characters like: "á"
     fun getFilteredProductsByTitle(title: String){
-        var filter = ProductFilter(title)
+        var filter = "{\"title\" : \"$title\"}"
         Log.d("xxx", filter.toString())
         viewModelScope.launch{
             try {

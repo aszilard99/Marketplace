@@ -13,6 +13,6 @@ interface MarketApi {
     suspend fun getProducts(@Header ("token") token: String) : ProductResponse
 
     @GET(Constants.GET_PRODUCTS_URL)
-    suspend fun getProductsFilteredByTitle(@Header ("token")token:String, @Header ("filter") filter : ProductFilter) : ProductResponse
+    suspend fun getProductsFilteredByTitle(@Header("token")token: String, @Header ("filter")filter : String) : ProductResponse
 
 }

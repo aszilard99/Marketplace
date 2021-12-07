@@ -11,7 +11,10 @@ class Repository {
     suspend fun getProducts(token: String) : ProductResponse {
         return RetrofitInstance.api.getProducts(token)
     }
-    suspend fun getProductsFilteredByTitle(token:String, filter:ProductFilter) : ProductResponse {
+    suspend fun getProductsFilteredByTitle(token:String, filter:String) : ProductResponse {
+
+
+
         return RetrofitInstance.api.getProductsFilteredByTitle(token, filter)
     }
 }
