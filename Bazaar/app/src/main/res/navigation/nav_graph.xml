@@ -18,4 +18,9 @@
         android:name="com.example.bazaar.fragments.TimelineFragment"
         android:label="fragment_timeline"
         tools:layout="@layout/fragment_timeline" />
+    <fragment
+        android:id="@+id/myMarketFragment"
+        android:name="com.example.bazaar.MyMarketFragment"
+        android:label="fragment_my_market"
+        tools:layout="@layout/fragment_my_market" />
 </navigation>

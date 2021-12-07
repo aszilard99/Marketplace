@@ -39,8 +39,7 @@ class TimelineViewModel(private val repository: Repository) : ViewModel() {
         getProducts()
     }
     //TODO throws error when the title contains special characters like: "á"
-    fun getFilteredProductsByTitle(title: String){
-        var filter = "{\"title\" : \"$title\"}"
+    fun getFilteredProducts(filter: String){
         Log.d("xxx", filter.toString())
         viewModelScope.launch{
             try {
@@ -56,5 +55,10 @@ class TimelineViewModel(private val repository: Repository) : ViewModel() {
 
             }
         }
+    }
+
+    fun getFilteredProductsByTitle(title: String){
+        var filter = "{\"title\" : \"$title\"}"
+        getFilteredProducts(filter)
     }
 }
