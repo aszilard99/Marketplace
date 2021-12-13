@@ -15,7 +15,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bazaar.R
@@ -23,6 +27,9 @@ import com.example.bazaar.recyclerview.dataadapters.TimelineDataAdapter
 import com.example.bazaar.repository.Repository
 import com.example.bazaar.viewmodels.TimelineViewModel
 import com.example.bazaar.viewmodels.TimelineViewModelFactory
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.navigation.NavigationView
 
 
 class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
@@ -30,7 +37,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
     private lateinit var timelineViewModel: TimelineViewModel
     private lateinit var adapter: TimelineDataAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var toolbar : Toolbar
+    private lateinit var bottomNavigation : BottomNavigationView
     private lateinit var searchButton : Button
     private lateinit var clearButton : Button
     private lateinit var searchET : EditText
@@ -70,6 +77,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
 
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.setHasFixedSize(true)
+        bottomNavigation = view.findViewById(R.id.bottom_navigation)
 
         //when starting the app, or when making a new GET to the api to filter the products this gets executed
         timelineViewModel.products.observe(viewLifecycleOwner){
@@ -93,8 +101,21 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
         }
         clearButton = view.findViewById(R.id.timelineClearButton)
 
+        bottomNavigation.setOnItemSelectedListener (NavigationBarView.OnItemSelectedListener {menuItem ->
+            menuItem.isChecked = true
+            when(menuItem.itemId){
+                R.id.myMarketMenuItem -> findNavController().navigate(R.id.myMarketFragment)
+
+            }
+            true
+        })
+
+
+
+        }
+
     }
-}
+
 
 
 

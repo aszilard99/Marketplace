@@ -14,6 +14,7 @@ import com.example.bazaar.R
 import com.example.bazaar.repository.Repository
 import com.example.bazaar.viewmodels.LoginViewModel
 import com.example.bazaar.viewmodels.LoginViewModelFactory
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 
@@ -54,6 +55,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun initializeView(view : View) {
+
         usernameET = view.findViewById(R.id.loginUsernameET)
         passwordET = view.findViewById(R.id.loginPasswordET)
 
