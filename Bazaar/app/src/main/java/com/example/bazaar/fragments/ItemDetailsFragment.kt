@@ -25,14 +25,7 @@ class ItemDetailsFragment : Fragment() {
     private lateinit var productList : List<Product>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val factory = TimelineViewModelFactory(Repository())
-        timelineViewModel = ViewModelProvider(this, factory).get(TimelineViewModel::class.java)
 
-        try {
-
-        }catch(e: NullPointerException){
-            Log.d("xxx", " productList - ItemDetailsFragment null")
-        }
 
     }
 
@@ -42,7 +35,16 @@ class ItemDetailsFragment : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_item_details, container, false)
         // Inflate the layout for this fragment
+        val factory = TimelineViewModelFactory(Repository())
+
+
+        try {
+            timelineViewModel = ViewModelProvider(requireActivity(), factory).get(TimelineViewModel::class.java)
+        }catch(e: NullPointerException){
+            Log.d("xxx", " productList - ItemDetailsFragment null")
+        }
         view?.apply{
+
             initializeView(view)
         }
         return view
@@ -57,5 +59,9 @@ class ItemDetailsFragment : Fragment() {
 
 
         title.text = timelineViewModel.currentProduct.title
+        owner.text = timelineViewModel.currentProduct.username
+        price_per_unit.text = timelineViewModel.currentProduct.price_per_unit
+        description.text = timelineViewModel.currentProduct.description
+
     }
 }

@@ -38,7 +38,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = TimelineViewModelFactory(Repository())
-        timelineViewModel = ViewModelProvider(this, factory).get(TimelineViewModel::class.java)
+        timelineViewModel = ViewModelProvider(requireActivity(), factory).get(TimelineViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -57,6 +57,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
     override fun onItemClick(position: Int) {
         try {
             timelineViewModel.currentProduct = timelineViewModel.products.value!!.get(position)
+            Log.d("xxx", timelineViewModel.currentProduct.toString())
         }catch(e: java.lang.NullPointerException){
 
         }

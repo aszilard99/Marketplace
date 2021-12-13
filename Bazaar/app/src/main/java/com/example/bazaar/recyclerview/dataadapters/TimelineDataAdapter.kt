@@ -36,6 +36,7 @@ class TimelineDataAdapter(private val productList: List<Product>, private val li
 
         override fun onClick(p0: View?) {
             val currentPosition = this.adapterPosition
+
             Log.d("xxx", "AdapterPosition: $currentPosition")
             listener.onItemClick(currentPosition)
         }
