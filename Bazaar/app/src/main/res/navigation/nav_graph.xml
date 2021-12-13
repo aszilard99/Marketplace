@@ -27,9 +27,13 @@
     </fragment>
     <fragment
         android:id="@+id/myMarketFragment"
-        android:name="com.example.bazaar.MyMarketFragment"
+        android:name="com.example.bazaar.fragments.MyMarketFragment"
         android:label="fragment_my_market"
-        tools:layout="@layout/fragment_my_market" />
+        tools:layout="@layout/fragment_my_market" >
+        <action
+            android:id="@+id/action_myMarketFragment_to_itemDetailsFragment"
+            app:destination="@id/itemDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/itemDetailsFragment"
         android:name="com.example.bazaar.fragments.ItemDetailsFragment"

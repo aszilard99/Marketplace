@@ -73,11 +73,13 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
     }
 
     private fun initializeView(view: View){
-        recyclerView = view.findViewById(R.id.recycler_view)
+        recyclerView = view.findViewById(R.id.recycler_view_timeline)
 
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.setHasFixedSize(true)
-        bottomNavigation = view.findViewById(R.id.bottom_navigation)
+
+        //TODO bottomnavigation onItemReselected implementation needs to be done and maybe more
+        bottomNavigation = view.findViewById(R.id.bottom_navigation_timeline)
 
         //when starting the app, or when making a new GET to the api to filter the products this gets executed
         timelineViewModel.products.observe(viewLifecycleOwner){
