@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
@@ -13,17 +14,31 @@ import com.example.bazaar.MyApplication
 import com.example.bazaar.R
 import com.example.bazaar.model.Product
 
-class TimelineDataAdapter(private val productList: List<Product>) : RecyclerView.Adapter<TimelineDataAdapter.DataViewHolder>() {
+class TimelineDataAdapter(private val productList: List<Product>, private val listener: OnItemClickListener) : RecyclerView.Adapter<TimelineDataAdapter.DataViewHolder>() {
 
     var  createCounter: Int = 0
     var bindCounter: Int = 0
 
-    inner class DataViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+    }
+
+    inner class DataViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val ownerTV: TextView = itemView.findViewById(R.id.timelineItemOwnerTV)
         val titleTV: TextView = itemView.findViewById(R.id.timelineItemTitleTV)
         val priceTV: TextView = itemView.findViewById(R.id.timelineItemPriceTV)
         val orderButton: Button = itemView.findViewById(R.id.timelineOrderButton)
         val availabilityTV: TextView = itemView.findViewById(R.id.timelineAvailabilityTV)
+
+        init{
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            val currentPosition = this.adapterPosition
+            Log.d("xxx", "AdapterPosition: $currentPosition")
+            listener.onItemClick(currentPosition)
+        }
         }
 
     override fun getItemCount() = productList.size

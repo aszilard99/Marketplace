@@ -17,10 +17,22 @@
         android:id="@+id/timelineFragment"
         android:name="com.example.bazaar.fragments.TimelineFragment"
         android:label="fragment_timeline"
-        tools:layout="@layout/fragment_timeline" />
+        tools:layout="@layout/fragment_timeline" >
+        <action
+            android:id="@+id/action_timelineFragment_to_itemDetailsFragment"
+            app:destination="@id/itemDetailsFragment" />
+        <action
+            android:id="@+id/action_timelineFragment_to_myMarketFragment"
+            app:destination="@id/myMarketFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myMarketFragment"
         android:name="com.example.bazaar.MyMarketFragment"
         android:label="fragment_my_market"
         tools:layout="@layout/fragment_my_market" />
+    <fragment
+        android:id="@+id/itemDetailsFragment"
+        android:name="com.example.bazaar.fragments.ItemDetailsFragment"
+        android:label="fragment_item_details"
+        tools:layout="@layout/fragment_item_details" />
 </navigation>

@@ -5,19 +5,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bazaar.MyApplication
+import com.example.bazaar.model.Image
 import com.example.bazaar.model.Product
 import com.example.bazaar.model.ProductFilter
 import com.example.bazaar.repository.Repository
 import kotlinx.coroutines.launch
+import okio.ByteString.Companion.encodeUtf8
 import java.lang.Exception
+import java.net.URLEncoder
 
 class TimelineViewModel(private val repository: Repository) : ViewModel() {
     var products : MutableLiveData<List<Product>> = MutableLiveData()
+    var currentProduct = Product(0.0, "", "", "", "",false, "", "", "", "", listOf(), 0, listOf())
 
-    init{
-        Log.d("xxx", "ListViewModel constructor - Token: ${MyApplication.token}")
+    init {
+        // Log.d("xxx", "ListViewModel constructor - Token: ${MyApplication.token}")
         getProducts()
     }
+
 
     private fun getProducts() {
         //laucnhes the coroutine with its lifecycle tied to the owner: TimelineViewModel
@@ -39,8 +44,8 @@ class TimelineViewModel(private val repository: Repository) : ViewModel() {
         getProducts()
     }
     //TODO throws error when the title contains special characters like: "á"
-    fun getFilteredProducts(filter: String){
-        Log.d("xxx", filter.toString())
+    /*fun getFilteredProducts(filter: String){
+        Log.d("xxx", filter.encodeUtf8().toString())
         viewModelScope.launch{
             try {
 
@@ -55,10 +60,10 @@ class TimelineViewModel(private val repository: Repository) : ViewModel() {
 
             }
         }
-    }
+    }*/
 
     fun getFilteredProductsByTitle(title: String){
         var filter = "{\"title\" : \"$title\"}"
-        getFilteredProducts(filter)
+
     }
 }

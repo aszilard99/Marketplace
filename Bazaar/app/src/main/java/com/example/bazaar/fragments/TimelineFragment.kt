@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bazaar.R
@@ -24,7 +25,7 @@ import com.example.bazaar.viewmodels.TimelineViewModel
 import com.example.bazaar.viewmodels.TimelineViewModelFactory
 
 
-class TimelineFragment : Fragment() {
+class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
     private lateinit var  textView: TextView
     private lateinit var timelineViewModel: TimelineViewModel
     private lateinit var adapter: TimelineDataAdapter
@@ -53,6 +54,16 @@ class TimelineFragment : Fragment() {
 
     }
 
+    override fun onItemClick(position: Int) {
+        try {
+            timelineViewModel.currentProduct = timelineViewModel.products.value!!.get(position)
+        }catch(e: java.lang.NullPointerException){
+
+        }
+        findNavController().navigate(R.id.action_timelineFragment_to_itemDetailsFragment)
+        Log.d("xxx", "AdapterPosition: $position")
+    }
+
     private fun initializeView(view: View){
         recyclerView = view.findViewById(R.id.recycler_view)
 
@@ -62,7 +73,7 @@ class TimelineFragment : Fragment() {
         //when starting the app, or when making a new GET to the api to filter the products this gets executed
         timelineViewModel.products.observe(viewLifecycleOwner){
             try {
-                adapter = timelineViewModel.products.value?.let { it1 -> TimelineDataAdapter(it1) }!!
+                adapter = timelineViewModel.products.value?.let { it1 -> TimelineDataAdapter(it1,this) }!!
             }catch(e : NullPointerException){
                 Log.d("xxx-error", e.toString())
             }
