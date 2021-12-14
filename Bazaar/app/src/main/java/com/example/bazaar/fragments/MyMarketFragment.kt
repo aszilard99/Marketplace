@@ -60,7 +60,7 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
         try {
             val list = timelineViewModel.products.value?.filter {
                 //TODO username change to myusername when capable of uploading own products
-                it.username == "demen"
+                it.username == MyApplication.username
             }
             adapter = TimelineDataAdapter(list!!, this)
         }catch(e: NullPointerException){

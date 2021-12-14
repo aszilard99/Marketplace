@@ -8,7 +8,7 @@
     tools:context=".fragments.AddItemFragment">
 
     <EditText
-        android:id="@+id/title_ET"
+        android:id="@+id/title_ET_addItemFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/price_per_unit_ET"
+        android:id="@+id/price_per_unit_ET_addItemFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="54dp"
@@ -33,10 +33,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_ET" />
+        app:layout_constraintTop_toBottomOf="@+id/title_ET_addItemFragment" />
 
     <EditText
-        android:id="@+id/total_amount_ET"
+        android:id="@+id/total_amount_ET_addItemFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
@@ -47,10 +47,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/price_per_unit_ET" />
+        app:layout_constraintTop_toBottomOf="@+id/price_per_unit_ET_addItemFragment" />
 
     <EditText
-        android:id="@+id/description_ET"
+        android:id="@+id/description_ET_addItemFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
@@ -61,5 +61,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/total_amount_ET" />
+        app:layout_constraintTop_toBottomOf="@+id/total_amount_ET_addItemFragment" />
+
+    <Button
+        android:id="@+id/launch_product_B_addItemFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Launch product"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description_ET_addItemFragment" />
 </androidx.constraintlayout.widget.ConstraintLayout>
