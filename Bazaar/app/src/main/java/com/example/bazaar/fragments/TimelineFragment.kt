@@ -1,25 +1,15 @@
 package com.example.bazaar.fragments
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.ActionBar
-import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bazaar.R
@@ -29,7 +19,6 @@ import com.example.bazaar.viewmodels.TimelineViewModel
 import com.example.bazaar.viewmodels.TimelineViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
-import com.google.android.material.navigation.NavigationView
 
 
 class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
@@ -73,13 +62,17 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
     }
 
     private fun initializeView(view: View){
+        //topAppbar
+        setHasOptionsMenu(true)
+
+
         recyclerView = view.findViewById(R.id.recycler_view_timeline)
 
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.setHasFixedSize(true)
 
         //TODO bottomnavigation onItemReselected implementation needs to be done and maybe more
-        bottomNavigation = view.findViewById(R.id.bottom_navigation_timeline)
+        bottomNavigation = view.findViewById(R.id.bottom_navigation_myfares)
 
         //when starting the app, or when making a new GET to the api to filter the products this gets executed
         timelineViewModel.products.observe(viewLifecycleOwner){
@@ -103,8 +96,11 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
         }
         clearButton = view.findViewById(R.id.timelineClearButton)
 
+
+
         bottomNavigation.setOnItemSelectedListener (NavigationBarView.OnItemSelectedListener {menuItem ->
-            menuItem.isChecked = true
+            bottomNavigation.menu.getItem(0).isChecked = true
+
             when(menuItem.itemId){
                 R.id.myMarketMenuItem -> findNavController().navigate(R.id.myMarketFragment)
                 R.id.myFaresMenuItem -> findNavController().navigate(R.id.myFaresFragment)
@@ -116,6 +112,24 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
 
 
         }
+    //topAppbar
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.top_appbar_menu,menu)
+    }
+    //topAppbar
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId){
+        R.id.profile_top_appbar_menu_item -> {
+            findNavController().navigate(R.id.myProfileFragment)
+            true
+        }
+        else -> {
+
+            super.onOptionsItemSelected(item)
+        }
+
+    }
 
     }
 

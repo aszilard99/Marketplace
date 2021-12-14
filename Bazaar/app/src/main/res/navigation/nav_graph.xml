@@ -36,9 +36,7 @@
         <action
             android:id="@+id/action_myMarketFragment_to_myFaresFragment"
             app:destination="@id/myFaresFragment" />
-        <action
-            android:id="@+id/action_myMarketFragment_to_timelineFragment"
-            app:destination="@id/timelineFragment" />
+
         <action
             android:id="@+id/action_myMarketFragment_to_addItemFragment"
             app:destination="@id/addItemFragment" />
@@ -56,13 +54,16 @@
         <action
             android:id="@+id/action_myFaresFragment_to_itemDetailsFragment"
             app:destination="@id/itemDetailsFragment" />
-        <action
-            android:id="@+id/action_myFaresFragment_to_myMarketFragment"
-            app:destination="@id/myMarketFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/addItemFragment"
         android:name="com.example.bazaar.fragments.AddItemFragment"
         android:label="fragment_add_item"
         tools:layout="@layout/fragment_add_item" />
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.example.bazaar.fragments.MyProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

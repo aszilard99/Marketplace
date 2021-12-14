@@ -27,7 +27,7 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="3dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_timeline"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_myfares"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_timeline"
+        android:id="@+id/bottom_navigation_myfares"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

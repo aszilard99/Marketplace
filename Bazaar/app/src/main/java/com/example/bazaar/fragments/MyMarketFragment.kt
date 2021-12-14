@@ -2,10 +2,8 @@ package com.example.bazaar.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -53,6 +51,10 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
     }
 
     private fun initializeView(view: View) {
+
+        //topAppbar
+        setHasOptionsMenu(true)
+
         recyclerView = view.findViewById(R.id.recycler_view_my_market)
 
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -69,7 +71,7 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
         recyclerView.adapter = adapter
         bottomNavigation = view.findViewById(R.id.bottom_navigation_my_market)
         bottomNavigation.setOnItemSelectedListener (NavigationBarView.OnItemSelectedListener { menuItem ->
-            menuItem.isChecked = true
+            menuItem.isChecked = false
             when(menuItem.itemId){
                 R.id.timelineMenuItem -> findNavController().navigate(R.id.timelineFragment)
                 R.id.myFaresMenuItem -> findNavController().navigate(R.id.myFaresFragment)
@@ -94,5 +96,24 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
         }
         findNavController().navigate(R.id.action_myMarketFragment_to_itemDetailsFragment)
         Log.d("xxx", "AdapterPosition: $position")
+    }
+
+    //topAppbar
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.top_appbar_menu,menu)
+    }
+    //topAppbar
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId){
+        R.id.profile_top_appbar_menu_item -> {
+            findNavController().navigate(R.id.myProfileFragment)
+            true
+        }
+        else -> {
+
+            super.onOptionsItemSelected(item)
+        }
+
     }
 }

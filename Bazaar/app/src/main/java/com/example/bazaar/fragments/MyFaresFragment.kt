@@ -1,11 +1,10 @@
 package com.example.bazaar.fragments
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bazaar.R
 import com.example.bazaar.recyclerview.dataadapters.TimelineDataAdapter
@@ -13,6 +12,7 @@ import com.example.bazaar.repository.Repository
 import com.example.bazaar.viewmodels.TimelineViewModel
 import com.example.bazaar.viewmodels.TimelineViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 
 
 class MyFaresFragment : Fragment() {
@@ -40,6 +40,41 @@ class MyFaresFragment : Fragment() {
     }
 
     private fun initializeView(view: View) {
+        //topAppbar
+        setHasOptionsMenu(true)
+
+        //bottom navigation
+        bottomNavigation = view.findViewById(R.id.bottom_navigation_myfares)
+        bottomNavigation.setOnItemSelectedListener (NavigationBarView.OnItemSelectedListener { menuItem ->
+            menuItem.isChecked = false
+            when(menuItem.itemId){
+                R.id.timelineMenuItem -> findNavController().navigate(R.id.timelineFragment)
+                R.id.myMarketMenuItem -> findNavController().navigate(R.id.myMarketFragment)
+            }
+            true
+        })
+
+
+
+    }
+
+
+
+    //topAppbar
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.top_appbar_menu,menu)
+    }
+    //topAppbar
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId){
+        R.id.profile_top_appbar_menu_item -> {
+            findNavController().navigate(R.id.myProfileFragment)
+            true
+        }
+        else -> {
+
+            super.onOptionsItemSelected(item)
+        }
 
     }
 }
