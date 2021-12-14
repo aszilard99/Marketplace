@@ -1,5 +1,6 @@
 package com.example.bazaar.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -71,8 +72,6 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.setHasFixedSize(true)
 
-        //TODO bottomnavigation onItemReselected implementation needs to be done and maybe more
-        bottomNavigation = view.findViewById(R.id.bottom_navigation_myfares)
 
         //when starting the app, or when making a new GET to the api to filter the products this gets executed
         timelineViewModel.products.observe(viewLifecycleOwner){
@@ -98,7 +97,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
 
 
 
-        bottomNavigation.setOnItemSelectedListener (NavigationBarView.OnItemSelectedListener {menuItem ->
+        /*bottomNavigation.setOnItemSelectedListener (NavigationBarView.OnItemSelectedListener {menuItem ->
             bottomNavigation.menu.getItem(0).isChecked = true
 
             when(menuItem.itemId){
@@ -107,7 +106,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
             }
 
             true
-        })
+        })*/
 
 
 

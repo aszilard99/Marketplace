@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Szilard/Desktop/AndroidProjects/Marketplace/Bazaar/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Szilard/Desktop/AndroidProjects/Marketplace/Bazaar/app/src/main/res/layout/fragment_login.xml" value="0.2" />
+        <entry key="..\:/Users/Szilard/Desktop/AndroidProjects/Marketplace/Bazaar/app/src/main/res/layout/fragment_timeline.xml" value="0.20625" />
+        <entry key="..\:/Users/Szilard/Desktop/AndroidProjects/Marketplace/Bazaar/app/src/main/res/layout/item_layout.xml" value="0.4" />
         <entry key="..\:/Users/Szilard/Documents/GitHub/Marketplace/Bazaar/app/src/main/res/drawable/avatar_1.xml" value="0.221875" />
         <entry key="..\:/Users/Szilard/Documents/GitHub/Marketplace/Bazaar/app/src/main/res/drawable/ic_add2_background.xml" value="0.3489583333333333" />
         <entry key="..\:/Users/Szilard/Documents/GitHub/Marketplace/Bazaar/app/src/main/res/drawable/ic_add_foreground.xml" value="0.3489583333333333" />
@@ -23,7 +27,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

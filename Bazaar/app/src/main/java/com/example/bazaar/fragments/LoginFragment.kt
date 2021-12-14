@@ -1,5 +1,6 @@
 package com.example.bazaar.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,12 +25,12 @@ class LoginFragment : Fragment() {
     private lateinit var loginButton: Button
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var registerButton : Button
+    private lateinit var bottomNavigation : BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = LoginViewModelFactory(this.requireContext(), Repository())
         //looks for or if doesnt exist already creates a LoginViewModel with its lifecycle connected to the activity
         loginViewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
-
 
     }
 
@@ -56,6 +57,10 @@ class LoginFragment : Fragment() {
 
     private fun initializeView(view : View) {
 
+
+
+        //bottomNavigation = view.findViewById(R.id.bottom_navigation)
+        //bottomNavigation.setVisibility(View.INVISIBLE)
         usernameET = view.findViewById(R.id.loginUsernameET)
         passwordET = view.findViewById(R.id.loginPasswordET)
         registerButton = view.findViewById(R.id.register_B_login_fragment)
