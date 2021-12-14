@@ -55,10 +55,11 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
         try {
             timelineViewModel.currentProduct = timelineViewModel.products.value!!.get(position)
             Log.d("xxx", timelineViewModel.currentProduct.toString())
+            findNavController().navigate(R.id.action_timelineFragment_to_itemDetailsFragment)
         }catch(e: java.lang.NullPointerException){
 
         }
-        findNavController().navigate(R.id.action_timelineFragment_to_itemDetailsFragment)
+
         Log.d("xxx", "AdapterPosition: $position")
     }
 

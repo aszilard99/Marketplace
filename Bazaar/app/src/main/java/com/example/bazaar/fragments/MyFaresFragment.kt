@@ -43,16 +43,6 @@ class MyFaresFragment : Fragment() {
         //topAppbar
         setHasOptionsMenu(true)
 
-        //bottom navigation
-        bottomNavigation = view.findViewById(R.id.bottom_navigation_myfares)
-        bottomNavigation.setOnItemSelectedListener (NavigationBarView.OnItemSelectedListener { menuItem ->
-            menuItem.isChecked = false
-            when(menuItem.itemId){
-                R.id.timelineMenuItem -> findNavController().navigate(R.id.timelineFragment)
-                R.id.myMarketMenuItem -> findNavController().navigate(R.id.myMarketFragment)
-            }
-            true
-        })
 
 
 

@@ -11,19 +11,15 @@
         android:id="@+id/recycler_view_my_market"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_my_market"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="10"
-        tools:layout_editor_absoluteX="7dp"
         tools:listitem="@layout/item_layout" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_my_market"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation_menu"
-        tools:layout_editor_absoluteX="37dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_button_my_market"
@@ -33,7 +29,7 @@
         android:layout_marginBottom="15dp"
         android:clickable="true"
         android:src="@android:drawable/ic_input_add"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_my_market"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 

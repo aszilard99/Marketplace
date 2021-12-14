@@ -64,6 +64,10 @@ class TimelineDataAdapter(private val productList: List<Product>, private val li
             holder.orderButton.setVisibility(View.INVISIBLE)
 
         }
+        if (currentItem.username != MyApplication.username) {
+            holder.orderButton.setVisibility(View.VISIBLE)
+
+        }
         if (currentItem.is_active) {
             holder.availabilityTV.text = "available"
         }

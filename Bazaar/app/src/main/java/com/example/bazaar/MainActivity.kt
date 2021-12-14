@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             when(menuItem.itemId){
                 R.id.myMarketMenuItem -> Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.myMarketFragment)
                 R.id.myFaresMenuItem -> Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.myFaresFragment)
+                R.id.timelineMenuItem -> Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.timelineFragment)
             }
 
             true

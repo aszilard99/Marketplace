@@ -6,7 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.bazaar.R
 import com.example.bazaar.model.Product
@@ -23,6 +27,7 @@ class ItemDetailsFragment : Fragment() {
     private lateinit var description :  TextView
     private lateinit var timelineViewModel : TimelineViewModel
     private lateinit var productList : List<Product>
+    private lateinit var order_button : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,6 +61,11 @@ class ItemDetailsFragment : Fragment() {
         price_per_unit = view.findViewById(R.id.pricePerUnitTV)
         description = view.findViewById(R.id.descriptionTV)
 
+        //TODO properly implementing order process
+        order_button = view.findViewById(R.id.order_button_itemdetails_fragment)
+        order_button.setOnClickListener {
+            withEditText(view)
+        }
 
 
         title.text = timelineViewModel.currentProduct.title
@@ -63,5 +73,17 @@ class ItemDetailsFragment : Fragment() {
         price_per_unit.text = timelineViewModel.currentProduct.price_per_unit
         description.text = timelineViewModel.currentProduct.description
 
+    }
+
+    //TODO properly implementing order dialog
+    fun withEditText(view: View) {
+        val builder = AlertDialog.Builder(requireContext())
+        val inflater = layoutInflater
+        builder.setTitle("With EditText")
+        val dialogLayout = inflater.inflate(R.layout.order_dialog, null)
+        val editText  = dialogLayout.findViewById<EditText>(R.id.editText)
+        builder.setView(dialogLayout)
+        builder.setPositiveButton("OK") { dialogInterface, i -> Toast.makeText(requireContext(), "EditText is " + editText.text.toString(), Toast.LENGTH_SHORT).show() }
+        builder.show()
     }
 }

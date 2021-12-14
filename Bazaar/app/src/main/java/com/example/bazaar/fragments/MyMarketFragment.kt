@@ -61,7 +61,6 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
         recyclerView.setHasFixedSize(true)
         try {
             val list = timelineViewModel.products.value?.filter {
-                //TODO username change to myusername when capable of uploading own products
                 it.username == MyApplication.username
             }
             adapter = TimelineDataAdapter(list!!, this)
@@ -69,15 +68,7 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
             Log.d("xxx", "myMarketFragment - adapter input list null")
         }
         recyclerView.adapter = adapter
-        bottomNavigation = view.findViewById(R.id.bottom_navigation_my_market)
-        bottomNavigation.setOnItemSelectedListener (NavigationBarView.OnItemSelectedListener { menuItem ->
-            menuItem.isChecked = false
-            when(menuItem.itemId){
-                R.id.timelineMenuItem -> findNavController().navigate(R.id.timelineFragment)
-                R.id.myFaresMenuItem -> findNavController().navigate(R.id.myFaresFragment)
-            }
-            true
-        })
+
         addItemButton = view.findViewById(R.id.add_button_my_market)
         addItemButton.setOnClickListener {
             findNavController().navigate(R.id.action_myMarketFragment_to_addItemFragment)
