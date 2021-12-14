@@ -23,7 +23,7 @@ class LoginFragment : Fragment() {
     private lateinit var passwordET: EditText
     private lateinit var loginButton: Button
     private lateinit var loginViewModel: LoginViewModel
-
+    private lateinit var registerButton : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = LoginViewModelFactory(this.requireContext(), Repository())
@@ -58,7 +58,10 @@ class LoginFragment : Fragment() {
 
         usernameET = view.findViewById(R.id.loginUsernameET)
         passwordET = view.findViewById(R.id.loginPasswordET)
-
+        registerButton = view.findViewById(R.id.register_B_login_fragment)
+        registerButton.setOnClickListener {
+            findNavController().navigate(R.id.registerFragment)
+        }
         loginButton = view.findViewById(R.id.loginButton)
         loginButton.setOnClickListener{
             loginViewModel.user.value.let{
