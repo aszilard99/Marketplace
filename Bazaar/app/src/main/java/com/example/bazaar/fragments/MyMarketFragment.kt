@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,8 @@ import com.example.bazaar.repository.Repository
 import com.example.bazaar.viewmodels.TimelineViewModel
 import com.example.bazaar.viewmodels.TimelineViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationBarView
 import java.lang.NullPointerException
 
 
@@ -27,7 +30,7 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var bottomNavigation: BottomNavigationView
     private lateinit var adapter : TimelineDataAdapter
-
+    private lateinit var addItemButton : FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = TimelineViewModelFactory(Repository())
@@ -65,6 +68,20 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
         }
         recyclerView.adapter = adapter
         bottomNavigation = view.findViewById(R.id.bottom_navigation_my_market)
+        bottomNavigation.setOnItemSelectedListener (NavigationBarView.OnItemSelectedListener { menuItem ->
+            menuItem.isChecked = true
+            when(menuItem.itemId){
+                R.id.timelineMenuItem -> findNavController().navigate(R.id.timelineFragment)
+                R.id.myFaresMenuItem -> findNavController().navigate(R.id.myFaresFragment)
+            }
+            true
+        })
+        addItemButton = view.findViewById(R.id.add_button_my_market)
+        addItemButton.setOnClickListener {
+            findNavController().navigate(R.id.action_myMarketFragment_to_addItemFragment)
+        }
+
+
     }
 
 

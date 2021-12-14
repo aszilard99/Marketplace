@@ -107,8 +107,9 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
             menuItem.isChecked = true
             when(menuItem.itemId){
                 R.id.myMarketMenuItem -> findNavController().navigate(R.id.myMarketFragment)
-
+                R.id.myFaresMenuItem -> findNavController().navigate(R.id.myFaresFragment)
             }
+
             true
         })
 

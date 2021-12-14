@@ -4,11 +4,16 @@
         android:id="@+id/timelineMenuItem"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="timeline" />
+        android:title="Timeline" />
     <item
         android:id="@+id/myMarketMenuItem"
         android:enabled="true"
 
         android:icon="@drawable/ic_clear_foreground"
-        android:title="mymarket" />
+        android:title="My market" />
+    <item
+        android:id="@+id/myFaresMenuItem"
+        android:enabled="true"
+        android:title="My fares"
+        />
 </menu>
