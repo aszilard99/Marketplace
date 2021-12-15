@@ -11,6 +11,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity() {
+
+
+    //TODO megoldani hogy az alkalmazast ne lehessen elforgatni
+
+    //TODO lekezelni hogy jelezze ha nincs internet
     private lateinit var bottomNavigation : BottomNavigationView
     private lateinit var navController : NavController
     override fun onCreate(savedInstanceState: Bundle?) {
