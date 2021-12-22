@@ -8,7 +8,6 @@ interface MarketApi {
     @POST(Constants.LOGIN_URL)
     suspend fun login(@Body request: LoginRequest) : LoginResponse
 
-    //TODO if im correct this part have to be extended with a proper ProductRequest data class with a <filter> attribute inside it and more
     @GET(Constants.GET_PRODUCTS_URL)
     suspend fun getProducts(@Header ("token") token: String, @Header ("limit") limit : Int) : ProductResponse
 
@@ -28,4 +27,16 @@ interface MarketApi {
         @Part ("amount_type") amount_type : String,
         @Part ("price_type") price_type : String,
     ): AddProductResponse
+
+    @Multipart
+    @POST(Constants.AdD_ORDER_URL)
+    suspend fun addOrder(
+        @Header ("token") token : String,
+        @Part ("title") title : String,
+        @Part ("description") description : String,
+        @Part ("price_per_unit") price_per_unit : String,
+        @Part ("units") units : String,
+        @Part ("owner_username") owner_username : String,
+        @Part ("revolut_link") revolut_link : String
+    )
 }

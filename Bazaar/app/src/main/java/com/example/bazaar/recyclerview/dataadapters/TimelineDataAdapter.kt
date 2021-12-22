@@ -14,7 +14,7 @@ import com.example.bazaar.MyApplication
 import com.example.bazaar.R
 import com.example.bazaar.model.Product
 
-class TimelineDataAdapter(private val productList: List<Product>, private val listener: OnItemClickListener) : RecyclerView.Adapter<TimelineDataAdapter.DataViewHolder>() {
+class TimelineDataAdapter(private val productList: List<Product>, private val listener: OnItemClickListener, private val orderListener: OnOrderButtonClickListener) : RecyclerView.Adapter<TimelineDataAdapter.DataViewHolder>() {
 
     var  createCounter: Int = 0
     var bindCounter: Int = 0
@@ -22,8 +22,18 @@ class TimelineDataAdapter(private val productList: List<Product>, private val li
     interface OnItemClickListener{
         fun onItemClick(position: Int)
     }
+    //the fragment that contains the recyclerView will extend this interface,
+    // delegating the task to the fragment from the DataAdapter
+    interface OnOrderButtonClickListener{
+        fun onOrderButtonClick(position: Int)
+    }
 
-    inner class DataViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+    interface myOnClickListener : View.OnClickListener {
+        fun OnOrderClick(position: Int)
+    }
+
+    inner class DataViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, myOnClickListener {
         val ownerTV: TextView = itemView.findViewById(R.id.timelineItemOwnerTV)
         val titleTV: TextView = itemView.findViewById(R.id.timelineItemTitleTV)
         val priceTV: TextView = itemView.findViewById(R.id.timelineItemPriceTV)
@@ -32,6 +42,14 @@ class TimelineDataAdapter(private val productList: List<Product>, private val li
 
         init{
             itemView.setOnClickListener(this)
+            orderButton.setOnClickListener {
+                OnOrderClick(this.adapterPosition)
+            }
+        }
+
+        override fun OnOrderClick(position: Int) {
+            Log.d("xxx", "AdapterPosition: $position")
+            orderListener.onOrderButtonClick(position)
         }
 
         override fun onClick(p0: View?) {
@@ -40,6 +58,8 @@ class TimelineDataAdapter(private val productList: List<Product>, private val li
             Log.d("xxx", "AdapterPosition: $currentPosition")
             listener.onItemClick(currentPosition)
         }
+
+
         }
 
     override fun getItemCount() = productList.size
@@ -78,7 +98,5 @@ class TimelineDataAdapter(private val productList: List<Product>, private val li
         ++bindCounter
         Log.d("xxx", "onBindViewHolder: $bindCounter")
     }
-
-
 }
 

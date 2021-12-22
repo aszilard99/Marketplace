@@ -22,7 +22,7 @@ import com.google.android.material.navigation.NavigationBarView
 import java.lang.NullPointerException
 
 
-class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
+class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, TimelineDataAdapter.OnOrderButtonClickListener {
 
     private lateinit var timelineViewModel: TimelineViewModel
     private lateinit var recyclerView: RecyclerView
@@ -63,7 +63,7 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
             val list = timelineViewModel.products.value?.filter {
                 it.username == MyApplication.username
             }
-            adapter = TimelineDataAdapter(list!!, this)
+            adapter = TimelineDataAdapter(list!!, this,this)
         }catch(e: NullPointerException){
             Log.d("xxx", "myMarketFragment - adapter input list null")
         }
@@ -106,5 +106,9 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener {
             super.onOptionsItemSelected(item)
         }
 
+    }
+
+    override fun onOrderButtonClick(position: Int) {
+        Log.d("MyMarketFragment", "order button task delegation success: $position")
     }
 }

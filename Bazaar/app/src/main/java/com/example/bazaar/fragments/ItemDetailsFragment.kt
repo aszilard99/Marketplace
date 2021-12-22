@@ -81,9 +81,9 @@ class ItemDetailsFragment : Fragment() {
         val inflater = layoutInflater
         builder.setTitle("With EditText")
         val dialogLayout = inflater.inflate(R.layout.order_dialog, null)
-        val editText  = dialogLayout.findViewById<EditText>(R.id.editText)
+
         builder.setView(dialogLayout)
-        builder.setPositiveButton("OK") { dialogInterface, i -> Toast.makeText(requireContext(), "EditText is " + editText.text.toString(), Toast.LENGTH_SHORT).show() }
+        builder.setPositiveButton("OK") { dialogInterface, i -> Toast.makeText(requireContext(), "EditText is ", Toast.LENGTH_SHORT).show() }
         builder.show()
     }
 }

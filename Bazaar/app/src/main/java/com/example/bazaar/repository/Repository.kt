@@ -24,4 +24,8 @@ class Repository {
     {
         return RetrofitInstance.api.addProduct(token,title, description,price_per_unit ,units , is_active ,rating ,amount_type , price_type )
     }
+
+    suspend fun addOrder(token: String,title : String, description : String,price_per_unit : String,units : String, owner_username : String, revolut_link : String){
+        return RetrofitInstance.api.addOrder(token,title, description, price_per_unit, units, owner_username, revolut_link)
+    }
 }

@@ -29,7 +29,7 @@ class TimelineViewModel(private val repository: Repository) : ViewModel() {
         //if TimelineViewModel gets destroyed, this coroutine stops
         viewModelScope.launch{
             try {
-                val result = repository.getProducts(MyApplication.token, 128)
+                val result = repository.getProducts(MyApplication.token, 512)
                 products.value = result.products
                 Log.d("xxx", "ListViewModel - #products:  ${result.item_count}")
 
