@@ -11,6 +11,8 @@ interface MarketApi {
     @GET(Constants.GET_PRODUCTS_URL)
     suspend fun getProducts(@Header ("token") token: String, @Header ("limit") limit : Int) : ProductResponse
 
+
+    //TODO check if this can be removed
     @GET(Constants.GET_PRODUCTS_URL)
     suspend fun getProductsFilteredByTitle(@Header("token")token: String, @Header ("filter")filter : String) : ProductResponse
 
@@ -37,6 +39,9 @@ interface MarketApi {
         @Part ("price_per_unit") price_per_unit : String,
         @Part ("units") units : String,
         @Part ("owner_username") owner_username : String,
-        @Part ("revolut_link") revolut_link : String
+        //@Part ("revolut_link") revolut_link : String
     )
+
+    @GET(Constants.GET_ORDERS_URL)
+    suspend fun getOrders(@Header ("token") token: String, @Header ("limit") limit : Int) : OrderResponse
 }

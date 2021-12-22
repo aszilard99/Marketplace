@@ -90,7 +90,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
         //when starting the app, or when making a new GET to the api to filter the products this gets executed
         timelineViewModel.products.observe(viewLifecycleOwner){
             try {
-                removeUselessCharacters(timelineViewModel.products)
+                removeUselessCharactersProduct(timelineViewModel.products)
                 adapter = timelineViewModel.products.value?.let { it1 -> TimelineDataAdapter(it1,this, this) }!!
             }catch(e : NullPointerException){
                 Log.d("xxx-error", e.toString())
@@ -234,7 +234,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
             }
         }
     }
-    fun removeUselessCharacters(list: MutableLiveData<List<Product>>){
+    fun removeUselessCharactersProduct(list: MutableLiveData<List<Product>>){
         try {
             list.value!!.forEach {
                 it.title = it.title.replace("\"", "").replace("\\", "")

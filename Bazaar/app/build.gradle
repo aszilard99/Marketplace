@@ -70,8 +70,12 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.core:core-ktx:1.6.0'
 
-    //material design - for bottom nav
+    //material design - for bottom nav, tab layout
     implementation 'com.google.android.material:material:<version>'
+
+    // viewpager for tab layout in MyFaresFragment(swiping between tabs/fragments)
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
 
 
 }

@@ -19,6 +19,7 @@ import com.example.bazaar.viewmodels.TimelineViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationBarView
+import java.lang.Exception
 import java.lang.NullPointerException
 
 
@@ -64,10 +65,11 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
                 it.username == MyApplication.username
             }
             adapter = TimelineDataAdapter(list!!, this,this)
-        }catch(e: NullPointerException){
+            recyclerView.adapter = adapter
+        }catch(e: Exception){
             Log.d("xxx", "myMarketFragment - adapter input list null")
         }
-        recyclerView.adapter = adapter
+
 
         addItemButton = view.findViewById(R.id.add_button_my_market)
         addItemButton.setOnClickListener {

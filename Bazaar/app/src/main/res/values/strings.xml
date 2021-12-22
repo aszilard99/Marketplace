@@ -2,4 +2,6 @@
     <string name="app_name">Bazaar</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_orders">My Orders</string>
+    <string name="my_fares">My Fares</string>
 </resources>

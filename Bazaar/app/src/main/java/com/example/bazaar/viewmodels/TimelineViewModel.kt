@@ -34,15 +34,13 @@ class TimelineViewModel(private val repository: Repository) : ViewModel() {
                 Log.d("xxx", "ListViewModel - #products:  ${result.item_count}")
 
             }catch (e: Exception) {
-                Log.d("xxx", "ListViewMofdel exception: ${e.toString()}")
+                Log.d("xxx", "ProductListViewMofdel exception: ${e.toString()}")
 
             }
         }
     }
 
-    fun clearFilters(){
-        getProducts()
-    }
+
     //TODO throws error when the title contains special characters like: "á"
     /*fun getFilteredProducts(filter: String){
         Log.d("xxx", filter.encodeUtf8().toString())
