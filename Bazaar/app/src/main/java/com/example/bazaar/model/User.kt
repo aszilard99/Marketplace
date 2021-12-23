@@ -12,6 +12,19 @@ data class LoginRequest (
     )
 
 @JsonClass(generateAdapter = true)
+data class ResetPasswordRequest (
+    var email: String,
+    var username: String
+)
+
+@JsonClass(generateAdapter = true)
+data class ResetPasswordResponse (
+    var code: Int,
+    var message: String,
+    var timestamp : Long
+)
+
+@JsonClass(generateAdapter = true)
 data class LoginResponse (
     var username: String,
     var email: String,

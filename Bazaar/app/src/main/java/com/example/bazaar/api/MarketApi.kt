@@ -8,6 +8,9 @@ interface MarketApi {
     @POST(Constants.LOGIN_URL)
     suspend fun login(@Body request: LoginRequest) : LoginResponse
 
+    @POST(Constants.PASSWORD_RESET_URL)
+    suspend fun resetPassword(@Body request: ResetPasswordRequest) : ResetPasswordResponse
+
     @POST(Constants.UPDATE_ORDER_URL)
     suspend fun updateOrder(@Query("order_id") order_id : String ,@Header("token")token : String, @Body request: OrderUpdateRequest) : OrderUpdateResponse
 
@@ -62,6 +65,7 @@ interface MarketApi {
         @Part("email") email : String,
         @Part ("username") username : String
     ): UpdateUserResponse
+
 
 
     @GET(Constants.GET_ORDERS_URL)

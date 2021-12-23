@@ -27,7 +27,7 @@ class LoginFragment : Fragment() {
     private lateinit var loginButton: Button
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var registerButton : Button
-    private lateinit var bottomNavigation : BottomNavigationView
+    private lateinit var forgotPwButton : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = LoginViewModelFactory(this.requireContext(), Repository())
@@ -74,7 +74,10 @@ class LoginFragment : Fragment() {
         passwordET = view.findViewById(R.id.loginPasswordET)
         fillInLoginDataIfExist()
 
-
+        forgotPwButton = view.findViewById(R.id.forgot_password_button)
+        forgotPwButton.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+        }
         registerButton = view.findViewById(R.id.register_B_login_fragment)
         registerButton.setOnClickListener {
             findNavController().navigate(R.id.registerFragment)
