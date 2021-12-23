@@ -56,7 +56,7 @@ class LoginFragment : Fragment() {
         loginViewModel.token.observe(viewLifecycleOwner){
 
             //token returned means successfull login, user data can be saved
-            saveLoginDataToSharedpreferences()
+            saveLoginDataToSharedpreferences(loginViewModel.token.value.toString())
 
             findNavController().navigate(R.id.timelineFragment)
         }
@@ -110,11 +110,12 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun saveLoginDataToSharedpreferences() {
+    private fun saveLoginDataToSharedpreferences(token : String) {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         with (sharedPref.edit()) {
             putString("username", usernameET.text.toString())
             putString("password", passwordET.text.toString())
+            putString("token", token)
             apply()
         }
         Log.d("xxx", "2 from sharedPref username ${sharedPref.getString("username", "").toString()}")

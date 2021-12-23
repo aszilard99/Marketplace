@@ -1,5 +1,6 @@
 package com.example.bazaar.viewmodels
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +15,7 @@ import okio.ByteString.Companion.encodeUtf8
 import java.lang.Exception
 import java.net.URLEncoder
 
-class TimelineViewModel(private val repository: Repository) : ViewModel() {
+class TimelineViewModel(private val repository: Repository, private val sharedPreferences: SharedPreferences) : ViewModel() {
     var products : MutableLiveData<List<Product>> = MutableLiveData()
     var currentProduct = Product(0.0, "", "", "", "",false, "", "", "", "", listOf(), 0, listOf())
 
@@ -24,12 +25,17 @@ class TimelineViewModel(private val repository: Repository) : ViewModel() {
     }
 
 
+    fun refreshProducts(){
+        getProducts()
+    }
+
     private fun getProducts() {
         //laucnhes the coroutine with its lifecycle tied to the owner: TimelineViewModel
         //if TimelineViewModel gets destroyed, this coroutine stops
         viewModelScope.launch{
             try {
-                val result = repository.getProducts(MyApplication.token, 512)
+                val token = sharedPreferences?.getString("token", "").toString()
+                val result = repository.getProducts(token , 512)
                 products.value = result.products
                 Log.d("xxx", "ListViewModel - #products:  ${result.item_count}")
 

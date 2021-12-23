@@ -36,11 +36,14 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
     private lateinit var username : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val factory = TimelineViewModelFactory(Repository())
+
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+
+        val factory = TimelineViewModelFactory(Repository(), sharedPref!!)
         timelineViewModel = ViewModelProvider(requireActivity(), factory).get(TimelineViewModel::class.java)
 
         //username from sharedPreferences
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+
         username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
     }
 
@@ -118,6 +121,10 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
         }
         R.id.logout_top_appbar_menu_item -> {
             findNavController().navigate(R.id.action_myMarketFragment_to_loginFragment)
+            true
+        }
+        R.id.refresh_top_appbar_menu_item -> {
+            timelineViewModel.refreshProducts()
             true
         }
         else -> {

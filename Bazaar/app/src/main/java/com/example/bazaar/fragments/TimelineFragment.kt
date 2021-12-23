@@ -2,6 +2,7 @@ package com.example.bazaar.fragments
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -46,12 +47,15 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
     private lateinit var username: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val factory = TimelineViewModelFactory(Repository())
-        timelineViewModel = ViewModelProvider(requireActivity(), factory).get(TimelineViewModel::class.java)
 
         //username from sharedPref
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
         username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
+
+        val factory = TimelineViewModelFactory(Repository(), sharedPref!!)
+        timelineViewModel = ViewModelProvider(requireActivity(), factory).get(TimelineViewModel::class.java)
+
+
     }
 
     override fun onCreateView(
@@ -139,11 +143,15 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
     //topAppbar
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId){
         R.id.profile_top_appbar_menu_item -> {
-            findNavController().navigate(R.id.myProfileFragment)
+            findNavController().navigate(R.id.action_timelineFragment_to_myProfileFragment)
             true
         }
         R.id.logout_top_appbar_menu_item -> {
             findNavController().navigate(R.id.action_timelineFragment_to_loginFragment)
+            true
+        }
+        R.id.refresh_top_appbar_menu_item -> {
+            timelineViewModel.refreshProducts()
             true
         }
         else -> {

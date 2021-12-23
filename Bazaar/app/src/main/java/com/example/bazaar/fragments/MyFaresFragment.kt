@@ -1,5 +1,6 @@
 package com.example.bazaar.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -36,7 +37,10 @@ class MyFaresFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val factory = OrdersViewModelFactory(Repository())
+
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+
+        val factory = OrdersViewModelFactory(Repository(), sharedPref!!)
         ordersViewModel = ViewModelProvider(requireActivity(), factory).get(OrdersViewModel::class.java)
     }
 

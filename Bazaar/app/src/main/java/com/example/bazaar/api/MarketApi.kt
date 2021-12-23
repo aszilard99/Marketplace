@@ -35,7 +35,7 @@ interface MarketApi {
     ): AddProductResponse
 
     @POST(Constants.REMOVE_PRODUCT_URL)
-    suspend fun removeProduct(@Header("token") token : String, @Query ("product_id")product_id: String) : DeleteProductResponse
+    suspend fun removeProduct(@Header("token") token : String, @Query ("product_id") product_id: String) : DeleteProductResponse
 
 
     @Multipart

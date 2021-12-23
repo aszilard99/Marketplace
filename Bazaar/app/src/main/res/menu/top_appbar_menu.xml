@@ -4,16 +4,20 @@
     <item
         android:id="@+id/profile_top_appbar_menu_item"
         android:icon="@drawable/ic_self_foreground"
-        android:title="Search"
+        android:title="Profile"
+        app:showAsAction="ifRoom"
          />
     <item
         android:id="@+id/search_top_appbar_menu_item"
-        android:icon="@drawable/ic_self_foreground"
-        android:title="profile"
-        app:showAsAction="ifRoom" />
+        android:title="Search"
+         />
     <item
         android:id="@+id/logout_top_appbar_menu_item"
-        android:icon="@drawable/ic_self_foreground"
         android:title="Log Out"
          />
+    <item
+        android:id="@+id/refresh_top_appbar_menu_item"
+        android:icon="@drawable/ic_refresh_foreground"
+        android:title="Refresh"
+        app:showAsAction="ifRoom" />
 </menu>

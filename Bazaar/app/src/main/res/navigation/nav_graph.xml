@@ -32,6 +32,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_timelineFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/myMarketFragment"
@@ -53,12 +56,20 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_myMarketFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemDetailsFragment"
         android:name="com.example.bazaar.fragments.ItemDetailsFragment"
         android:label="fragment_item_details"
-        tools:layout="@layout/fragment_item_details" />
+        tools:layout="@layout/fragment_item_details" >
+        <action
+            android:id="@+id/action_itemDetailsFragment_to_timelineFragment2"
+            app:destination="@id/timelineFragment"
+            app:popUpTo="@id/timelineFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myFaresFragment"
         android:name="com.example.bazaar.fragments.MyFaresFragment"
@@ -72,6 +83,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_myFaresFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
 
     </fragment>
     <fragment

@@ -96,6 +96,7 @@ class AddItemFragment : Fragment() {
                     "RON"
                 )
                 Log.d("xxx", "addItem: ${result}")
+
             }catch (e: Exception) {
                 Log.d("xxx", "addItemFragment exception: ${e.toString()}")
 

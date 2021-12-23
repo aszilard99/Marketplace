@@ -12,11 +12,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.bazaar.R
+import com.example.bazaar.api.RetrofitInstance
 import com.example.bazaar.model.Product
 import com.example.bazaar.repository.Repository
 import com.example.bazaar.viewmodels.TimelineViewModel
 import com.example.bazaar.viewmodels.TimelineViewModelFactory
+import kotlinx.coroutines.launch
 import java.lang.NullPointerException
 
 
@@ -29,7 +33,7 @@ class ItemDetailsFragment : Fragment() {
     private lateinit var productList : List<Product>
     private lateinit var order_button : Button
     private lateinit var removeButton : Button
-
+    private lateinit var token: String
 
 
     override fun onCreateView(
@@ -38,7 +42,8 @@ class ItemDetailsFragment : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_item_details, container, false)
         // Inflate the layout for this fragment
-        val factory = TimelineViewModelFactory(Repository())
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        val factory = TimelineViewModelFactory(Repository(), sharedPref!!)
 
 
         try {
@@ -48,6 +53,9 @@ class ItemDetailsFragment : Fragment() {
         }
         view?.apply{
 
+            //token from sharedPref
+
+            token = sharedPref?.getString("token", "").toString()
             initializeView(view)
         }
         return view
@@ -73,7 +81,21 @@ class ItemDetailsFragment : Fragment() {
         }else{
             removeButton.setVisibility(View.VISIBLE)
         }
+        removeButton.setOnClickListener{
+            val product_id = timelineViewModel.currentProduct.product_id
 
+            lifecycleScope.launch {
+                try{
+                    val repo = Repository()
+                    val result = repo.removeProduct(token, timelineViewModel.currentProduct.product_id)
+                    findNavController().navigate(R.id.action_itemDetailsFragment_to_timelineFragment2)
+                }catch(e: Exception){
+                    Log.d("xxx", "Remove product error : $e")
+                }
+            }
+
+
+        }
 
         //TODO properly implementing order process
         order_button = view.findViewById(R.id.order_button_itemdetails_fragment)
@@ -85,6 +107,7 @@ class ItemDetailsFragment : Fragment() {
 
 
     }
+
 
     //TODO properly implementing order dialog
     fun withEditText(view: View) {
