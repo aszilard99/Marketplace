@@ -8,16 +8,18 @@
         app:showAsAction="ifRoom"
          />
     <item
-        android:id="@+id/search_top_appbar_menu_item"
-        android:title="Search"
-         />
-    <item
-        android:id="@+id/logout_top_appbar_menu_item"
-        android:title="Log Out"
-         />
+        android:id="@+id/filter_top_appbar_menu_item"
+        android:icon="@drawable/ic_filter_foreground"
+        android:title="Filter"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/refresh_top_appbar_menu_item"
         android:icon="@drawable/ic_refresh_foreground"
         android:title="Refresh"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/logout_top_appbar_menu_item"
+        android:title="Log Out"
+        />
 </menu>

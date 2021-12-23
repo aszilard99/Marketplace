@@ -2,12 +2,14 @@ package com.example.bazaar.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -34,7 +36,7 @@ class ItemDetailsFragment : Fragment() {
     private lateinit var order_button : Button
     private lateinit var removeButton : Button
     private lateinit var token: String
-
+    private val repository = Repository()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -112,13 +114,70 @@ class ItemDetailsFragment : Fragment() {
 
     //TODO properly implementing order dialog
     fun withEditText(view: View) {
+
         val builder = AlertDialog.Builder(requireContext())
         val inflater = layoutInflater
-        builder.setTitle("With EditText")
+        builder.setTitle("My Order")
         val dialogLayout = inflater.inflate(R.layout.order_dialog, null)
+        val amountET = dialogLayout.findViewById<EditText>(R.id.orderDialogAmountET)
 
+        //TODO comments not yet implemented
+        val commentsET = dialogLayout.findViewById<EditText>(R.id.orderDialogCommentsET)
+        var amount = "1"
+        amountET.setText(amount)
         builder.setView(dialogLayout)
-        builder.setPositiveButton("OK") { dialogInterface, i -> Toast.makeText(requireContext(), "EditText is ", Toast.LENGTH_SHORT).show() }
+        /*builder.setPositiveButton("Order") {
+                dialogInterface,
+                i -> Toast.makeText(requireContext(), amountET.text.toString(), Toast.LENGTH_SHORT).show()
+
+        }*/
+        builder.setPositiveButton("Order") {
+                dialogInterface,
+                i -> if (!TextUtils.isEmpty(amountET.text)){
+            Toast.makeText(requireContext(), "order dialog amount ET not empty", Toast.LENGTH_SHORT).show()
+            addOrder(
+                timelineViewModel.currentProduct.title,
+                timelineViewModel.currentProduct.description,
+                timelineViewModel.currentProduct.price_per_unit,
+                amountET.text.toString(),
+                timelineViewModel.currentProduct.username,
+                "www.revolut.com"
+            )
+        }
+        else{
+            Toast.makeText(requireContext(), "order dialog amount ET empty", Toast.LENGTH_SHORT).show()
+            addOrder(
+                timelineViewModel.currentProduct.title,
+                timelineViewModel.currentProduct.description,
+                timelineViewModel.currentProduct.price_per_unit,
+                amount,
+                timelineViewModel.currentProduct.username,
+                "www.revolut.com"
+            )
+        }
+
+        }
+        builder.setNegativeButton("Cancel") {dialogInterface, i -> Toast.makeText(requireContext(), "Order Canceled", Toast.LENGTH_SHORT).show()}
         builder.show()
+    }
+
+    private fun addOrder(title : String, description : String,price_per_unit : String,units : String, owner_username : String, revolut_link : String) {
+        lifecycleScope.launch{
+            try {
+                val result = repository.addOrder(
+                    timelineViewModel.token,
+                    title,
+                    description,
+                    price_per_unit,
+                    units,
+                    owner_username,
+                    revolut_link
+                )
+                Log.d("xxx", "addOrder: ${result}")
+            }catch (e: java.lang.Exception) {
+                Log.d("xxx", "addOrder exception: ${e.toString()}")
+
+            }
+        }
     }
 }

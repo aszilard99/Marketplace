@@ -133,7 +133,7 @@ class MyFaresFragment : Fragment() {
     //topAppbar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.top_appbar_menu,menu)
+        inflater.inflate(R.menu.top_appbar_menu_default,menu)
     }
     //topAppbar
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId){
@@ -143,6 +143,10 @@ class MyFaresFragment : Fragment() {
         }
         R.id.logout_top_appbar_menu_item -> {
             findNavController().navigate(R.id.action_myFaresFragment_to_loginFragment)
+            true
+        }
+        R.id.refresh_top_appbar_menu_item -> {
+            ordersViewModel.refreshOrders()
             true
         }
         else -> {

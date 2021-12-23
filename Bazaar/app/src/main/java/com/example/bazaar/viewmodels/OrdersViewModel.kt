@@ -19,6 +19,10 @@ class OrdersViewModel(private val repository: Repository, private val sharedPref
         getOrders()
     }
 
+    fun refreshOrders(){
+        getOrders()
+    }
+
     private fun getOrders() {
         viewModelScope.launch {
             //the request for all the orders is made because with the addition of useless characters: " \, the backend's filter is unusable

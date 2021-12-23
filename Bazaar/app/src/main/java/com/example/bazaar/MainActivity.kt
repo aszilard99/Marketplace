@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation = findViewById(R.id.bottom_navigation)
         navController = Navigation.findNavController(this,R.id.nav_host_fragment)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == R.id.loginFragment) {
+            if(destination.id == R.id.loginFragment || destination.id == R.id.registerFragment || destination.id == R.id.itemDetailsFragment || destination.id == R.id.myProfileFragment) {
 
                 bottomNavigation.visibility = View.GONE
             } else {

@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -23,7 +22,6 @@ import com.example.bazaar.recyclerview.dataadapters.TimelineDataAdapter
 import com.example.bazaar.repository.Repository
 import com.example.bazaar.viewmodels.TimelineViewModel
 import com.example.bazaar.viewmodels.TimelineViewModelFactory
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -99,7 +97,9 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
             recyclerView.adapter = adapter
         }
         searchET = view.findViewById(R.id.timelineSearchET)
+        searchET.setVisibility(View.GONE)
         searchButton = view.findViewById(R.id.timelineSearchButton)
+        searchButton.setVisibility(View.GONE)
         searchButton.setOnClickListener{
             val text = searchET.text
             if (text.toString() != ""){
@@ -128,7 +128,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
     //TODO (refresh gombot hozzaadni hogy frissljon a recyclerview)
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.top_appbar_menu,menu)
+        inflater.inflate(R.menu.top_appbar_menu_timeline,menu)
     }
     //topAppbar
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId){
@@ -142,6 +142,16 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
         }
         R.id.refresh_top_appbar_menu_item -> {
             timelineViewModel.refreshProducts()
+            true
+        }
+        R.id.filter_top_appbar_menu_item -> {
+            if (searchET.visibility == View.GONE){
+                searchET.visibility = View.VISIBLE
+                searchButton.visibility = View.VISIBLE
+            }else{
+                searchET.visibility = View.GONE
+                searchButton.visibility = View.GONE
+            }
             true
         }
         else -> {
@@ -181,7 +191,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
         //TODO comments not yet implemented
         val commentsET = dialogLayout.findViewById<EditText>(R.id.orderDialogCommentsET)
         var amount = "1"
-
+        amountET.setText(amount)
         builder.setView(dialogLayout)
         /*builder.setPositiveButton("Order") {
                 dialogInterface,

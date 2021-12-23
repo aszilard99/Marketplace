@@ -10,6 +10,19 @@ data class Message(
     var message : String,
     var creation_time: Long
 )
+@JsonClass(generateAdapter = true)
+data class OrderUpdateRequest(
+    var price_per_unit: Int,
+    var status : String,
+    var title : String
+)
+@JsonClass(generateAdapter = true)
+data class OrderUpdateResponse(
+    var price_per_unit: Int,
+    var status : String,
+    var title : String
+)
+
 
 @JsonClass(generateAdapter = true)
 data class Order(

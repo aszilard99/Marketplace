@@ -106,7 +106,8 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
     //TODO (refresh gombot hozzaadni hogy frissljon a recyclerview)
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.top_appbar_menu,menu)
+        inflater.inflate(R.menu.top_appbar_menu_default,menu)
+
     }
     //topAppbar
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId){

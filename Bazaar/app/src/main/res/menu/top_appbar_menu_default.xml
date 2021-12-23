@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/profile_top_appbar_menu_item"
+        android:icon="@drawable/ic_self_foreground"
+        android:title="Profile"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/refresh_top_appbar_menu_item"
+        android:icon="@drawable/ic_refresh_foreground"
+        android:title="Refresh"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/logout_top_appbar_menu_item"
+        android:title="Log Out"
+        />
+</menu>

@@ -8,6 +8,10 @@ interface MarketApi {
     @POST(Constants.LOGIN_URL)
     suspend fun login(@Body request: LoginRequest) : LoginResponse
 
+    @POST(Constants.UPDATE_ORDER_URL)
+    suspend fun updateOrder(@Query("order_id") order_id : String ,@Header("token")token : String, @Body request: OrderUpdateRequest) : OrderUpdateResponse
+
+
     @POST(Constants.REGISTER_URL)
     suspend fun register(@Body request: RegisterRequest) : RegisterResponse
 
@@ -60,4 +64,6 @@ interface MarketApi {
 
     @GET(Constants.GET_ORDERS_URL)
     suspend fun getOrders(@Header ("token") token: String, @Header ("limit") limit : Int) : OrderResponse
+
+
 }
