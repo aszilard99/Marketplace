@@ -29,13 +29,10 @@ import java.lang.Exception
 
 
 class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, TimelineDataAdapter.OnOrderButtonClickListener {
-    private lateinit var  textView: TextView
     private lateinit var timelineViewModel: TimelineViewModel
     private lateinit var adapter: TimelineDataAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var bottomNavigation : BottomNavigationView
     private lateinit var searchButton : Button
-    private lateinit var clearButton : Button
     private lateinit var searchET : EditText
     private lateinit var repository : Repository
     private lateinit var username: String
@@ -106,26 +103,23 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
         searchButton.setOnClickListener{
             val text = searchET.text
             if (text.toString() != ""){
-                timelineViewModel.getFilteredProductsByTitle(text.toString())
+                try {
+                    var a = timelineViewModel.products.value
+                    var b = a!!.map { it }?.filter { it.title == text.toString() }
+                    //-> working // timelineViewModel.products.value = b
+                    recyclerView.setAdapter(TimelineDataAdapter(username,b,this,this));
+                    recyclerView.invalidate();
+
+                }catch(e : NullPointerException){
+                    Log.d("xxx-error", e.toString())
+                }
             }
-            else{
-                //do nothing
-            }
+
         }
-        clearButton = view.findViewById(R.id.timelineClearButton)
 
 
 
-        /*bottomNavigation.setOnItemSelectedListener (NavigationBarView.OnItemSelectedListener {menuItem ->
-            bottomNavigation.menu.getItem(0).isChecked = true
 
-            when(menuItem.itemId){
-                R.id.myMarketMenuItem -> findNavController().navigate(R.id.myMarketFragment)
-                R.id.myFaresMenuItem -> findNavController().navigate(R.id.myFaresFragment)
-            }
-
-            true
-        })*/
 
 
 
@@ -206,7 +200,6 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
                             timelineViewModel.currentProduct.username,
                             "www.revolut.com"
                         )
-
                     }
                     else{
                         Toast.makeText(requireContext(), "order dialog amount ET empty", Toast.LENGTH_SHORT).show()
