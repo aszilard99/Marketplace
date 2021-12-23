@@ -27,21 +27,13 @@
             app:srcCompat="@mipmap/ic_order_1_foreground" />
 
         <TextView
-            android:id="@+id/myFaresItemPriceTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="Price"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-        <TextView
             android:id="@+id/myFaresItemTitleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="title"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/order_layout_decline_order_button"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toBottomOf="@+id/myFaresItemOwnerTV" />
 
@@ -51,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:text="owner"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/order_layout_accept_order_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="parent" />
@@ -60,33 +52,57 @@
             android:id="@+id/myFaresAvailabilityTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="111dp"
             android:layout_marginEnd="165dp"
-            android:layout_marginBottom="15dp"
             android:text="Availabilty"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/myFaresItemPriceTV"
-            app:layout_constraintTop_toTopOf="@+id/myFaresItemPriceTV" />
+            app:layout_constraintTop_toTopOf="@+id/myFaresAmountTV" />
 
         <TextView
             android:id="@+id/myFaresMessagesTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:text="Messages"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/myFaresAvailabilityTV" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myFaresAvailabilityTV" />
 
         <TextView
             android:id="@+id/myFaresAmountTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="5dp"
             android:text="Amount"
-            app:layout_constraintStart_toEndOf="@+id/myFaresItemPriceTV"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <Button
+            android:id="@+id/order_layout_accept_order_button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="15dp"
+            android:text="Accept"
+            android:visibility="invisible"
+            app:cornerRadius="150dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/order_layout_decline_order_button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="15dp"
+            android:text="Decline"
+            android:visibility="invisible"
+            app:cornerRadius="150dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/order_layout_accept_order_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

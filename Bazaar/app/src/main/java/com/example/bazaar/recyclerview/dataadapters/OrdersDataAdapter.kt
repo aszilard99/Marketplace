@@ -4,12 +4,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bazaar.R
 import com.example.bazaar.model.Order
 
-class OrdersDataAdapter(private val orderList: List<Order>) : RecyclerView.Adapter<OrdersDataAdapter.DataViewHolder>() {
+class OrdersDataAdapter(private val username: String, private val orderList: List<Order>) : RecyclerView.Adapter<OrdersDataAdapter.DataViewHolder>() {
 
     var  createCounter: Int = 0
     var bindCounter: Int = 0
@@ -17,10 +18,11 @@ class OrdersDataAdapter(private val orderList: List<Order>) : RecyclerView.Adapt
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ownerTV: TextView = itemView.findViewById(R.id.myFaresItemOwnerTV)
         val titleTV: TextView = itemView.findViewById(R.id.myFaresItemTitleTV)
-        val priceTV: TextView = itemView.findViewById(R.id.myFaresItemPriceTV)
         val availabilityTV: TextView = itemView.findViewById(R.id.myFaresAvailabilityTV)
         val messagesTV : TextView = itemView.findViewById(R.id.myFaresMessagesTV)
         val amountTV : TextView = itemView.findViewById(R.id.myFaresAmountTV)
+        val acceptButton : Button = itemView.findViewById(R.id.order_layout_accept_order_button)
+        val declineButton : Button = itemView.findViewById(R.id.order_layout_decline_order_button)
         init {
 
         }
@@ -38,8 +40,24 @@ class OrdersDataAdapter(private val orderList: List<Order>) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: OrdersDataAdapter.DataViewHolder, position: Int) {
         val currentItem = orderList[position]
         holder.ownerTV.text = currentItem.username
-        holder.priceTV.text = "${currentItem.price_per_unit}"
         holder.titleTV.text = currentItem.title
+        holder.availabilityTV.text = currentItem.status
+        holder.amountTV.text = "amount: ${currentItem.units}"
+        holder.acceptButton.visibility = View.INVISIBLE
+        holder.declineButton.visibility = View.INVISIBLE
+
+        if (currentItem.owner_username == username && currentItem.status == "OPEN"){
+            holder.acceptButton.visibility = View.VISIBLE
+            holder.declineButton.visibility = View.VISIBLE
+        }
+
+        if (!currentItem.messages.isEmpty()) {
+            holder.messagesTV.visibility = View.VISIBLE
+            holder.messagesTV.text = currentItem.messages.get(0).message
+        }else{
+            holder.messagesTV.visibility = View.GONE
+        }
+
 
 
 

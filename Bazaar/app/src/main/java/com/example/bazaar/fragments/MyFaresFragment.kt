@@ -29,12 +29,11 @@ class MyFaresFragment : Fragment() {
     private lateinit var tabLayout : TabLayout
     private lateinit var ordersViewModel : OrdersViewModel
     private lateinit var repository: Repository
-    private lateinit var username : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-        username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
+        val username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
 
         val factory = OrdersViewModelFactory(Repository(), sharedPref!!)
         ordersViewModel = ViewModelProvider(requireActivity(), factory).get(OrdersViewModel::class.java)
@@ -66,7 +65,9 @@ class MyFaresFragment : Fragment() {
         ordersViewModel.orders.observe(viewLifecycleOwner){
             try {
                 removeUselessCharactersOrder(ordersViewModel.orders)
-                adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1.filter { it.owner_username == username }) }!!
+                val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+                val username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
+                adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(username, it1.filter { it.owner_username == username }) }!!
             }catch(e : NullPointerException){
                 Log.d("xxx-error", e.toString())
             }
@@ -96,13 +97,14 @@ class MyFaresFragment : Fragment() {
 
     fun setupTabLayout(){
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-
+            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+            val username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab?.position == 0){
                     Log.d("xxx", "MyFaresFragment My Sales tab selected")
                     try {
                         removeUselessCharactersOrder(ordersViewModel.orders)
-                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1.filter { it.owner_username == username }) }!!
+                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(username, it1.filter { it.owner_username == username }) }!!
                     }catch(e : NullPointerException){
                         Log.d("xxx-error", e.toString())
                     }
@@ -112,7 +114,7 @@ class MyFaresFragment : Fragment() {
                     Log.d("xxx", "MyFaresFragment My Orders tab selected")
                     try {
                         removeUselessCharactersOrder(ordersViewModel.orders)
-                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1.filter { it.username == username }) }!!
+                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(username, it1.filter { it.username == username }) }!!
                     }catch(e : NullPointerException){
                         Log.d("xxx-error", e.toString())
                     }
