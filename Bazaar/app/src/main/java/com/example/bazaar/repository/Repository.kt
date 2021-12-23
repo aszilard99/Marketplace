@@ -2,8 +2,10 @@ package com.example.bazaar.repository
 
 import com.example.bazaar.api.RetrofitInstance
 import com.example.bazaar.model.*
+import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 class Repository {
     suspend fun login(request: LoginRequest) : LoginResponse {
@@ -48,4 +50,9 @@ class Repository {
     suspend fun updateUser(token : String, username: String, phone_number: String) : UpdateUserResponse{
         return RetrofitInstance.api.updateUser(token, phone_number, username)
     }
+
+    suspend fun updateOrder(order_id: String, token: String, request: OrderUpdateRequest) : OrderUpdateResponse{
+        return RetrofitInstance.api.updateOrder(order_id,token, request)
+    }
+
 }

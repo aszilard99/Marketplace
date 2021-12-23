@@ -22,11 +22,13 @@ class OrdersDataAdapter(private val username: String, private val orderList: Lis
     // delegating the task to the fragment from the DataAdapter
     interface OnAcceptButtonClickListener{
         fun onAcceptButtonClick(position: Int)
+        fun onDeclineButtonClick(position: Int)
     }
 
 
     interface myOnClickListener : View.OnClickListener {
         fun OnAcceptClick(position: Int)
+        fun OnDeclineClick(position: Int)
     }
 
 
@@ -45,11 +47,18 @@ class OrdersDataAdapter(private val username: String, private val orderList: Lis
             acceptButton.setOnClickListener {
                 OnAcceptClick(this.adapterPosition)
             }
+            declineButton.setOnClickListener {
+                OnDeclineClick(this.adapterPosition)
+            }
         }
 
         override fun OnAcceptClick(position: Int) {
             Log.d("xxx", "AdapterPosition: $position")
             orderListener.onAcceptButtonClick(position)
+        }
+        override fun OnDeclineClick(position: Int) {
+            Log.d("xxx", "AdapterPosition: $position")
+            orderListener.onDeclineButtonClick(position)
         }
 
         override fun onClick(p0: View?) {
