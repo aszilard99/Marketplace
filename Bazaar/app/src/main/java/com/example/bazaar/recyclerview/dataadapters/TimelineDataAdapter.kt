@@ -1,17 +1,12 @@
 package com.example.bazaar.recyclerview.dataadapters
 
-import android.content.Context
-import android.opengl.Visibility
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bazaar.MyApplication
 import com.example.bazaar.R
 import com.example.bazaar.model.Product
 

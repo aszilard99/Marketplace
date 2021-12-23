@@ -20,7 +20,7 @@ data class Product(
     var title: String,
     var images: List<Image>,
     var creation_time: Long,
-    var messages : List<String>
+    var messages : List<Message>
 )
 
 

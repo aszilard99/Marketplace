@@ -88,6 +88,7 @@ class ItemDetailsFragment : Fragment() {
                 try{
                     val repo = Repository()
                     val result = repo.removeProduct(token, timelineViewModel.currentProduct.product_id)
+                    timelineViewModel.refreshProducts()
                     findNavController().navigate(R.id.action_itemDetailsFragment_to_timelineFragment2)
                 }catch(e: Exception){
                     Log.d("xxx", "Remove product error : $e")

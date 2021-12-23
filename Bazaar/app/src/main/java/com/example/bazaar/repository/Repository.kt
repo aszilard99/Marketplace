@@ -45,5 +45,7 @@ class Repository {
         return RetrofitInstance.api.getOrders(token, limit)
     }
 
-
+    suspend fun updateUser(token : String, username: String, phone_number: String) : UpdateUserResponse{
+        return RetrofitInstance.api.updateUser(token, phone_number, username)
+    }
 }

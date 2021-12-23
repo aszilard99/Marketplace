@@ -1,8 +1,6 @@
 package com.example.bazaar.fragments
 
 import android.content.Context
-import android.content.DialogInterface
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -12,7 +10,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +17,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bazaar.MyApplication
 import com.example.bazaar.R
 import com.example.bazaar.model.Product
 import com.example.bazaar.recyclerview.dataadapters.TimelineDataAdapter
@@ -28,9 +24,7 @@ import com.example.bazaar.repository.Repository
 import com.example.bazaar.viewmodels.TimelineViewModel
 import com.example.bazaar.viewmodels.TimelineViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
 import kotlinx.coroutines.launch
-import java.io.IOException
 import java.lang.Exception
 
 
@@ -45,6 +39,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
     private lateinit var searchET : EditText
     private lateinit var repository : Repository
     private lateinit var username: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,6 +49,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
 
         val factory = TimelineViewModelFactory(Repository(), sharedPref!!)
         timelineViewModel = ViewModelProvider(requireActivity(), factory).get(TimelineViewModel::class.java)
+        timelineViewModel.token = sharedPref?.getString("token", "").toString()
 
 
     }
@@ -235,7 +231,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
         lifecycleScope.launch{
             try {
                 val result = repository.addOrder(
-                    MyApplication.token,
+                    timelineViewModel.token,
                     title,
                     description,
                     price_per_unit,

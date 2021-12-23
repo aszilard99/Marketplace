@@ -5,9 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.bazaar.MyApplication
 import com.example.bazaar.model.Order
-import com.example.bazaar.model.Product
 import com.example.bazaar.repository.Repository
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -15,7 +13,8 @@ import java.io.IOException
 class OrdersViewModel(private val repository: Repository, private val sharedPreferences: SharedPreferences) : ViewModel() {
     var orders : MutableLiveData<List<Order>> = MutableLiveData()
     var currentOrder = Order("", "", "", "", "","", "", "", listOf(), 0, listOf())
-
+    var token : String = ""
+    var username : String = ""
     init{
         getOrders()
     }

@@ -1,5 +1,6 @@
 package com.example.bazaar.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -9,12 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
-import com.example.bazaar.MyApplication
+import androidx.navigation.fragment.findNavController
 import com.example.bazaar.R
 import com.example.bazaar.repository.Repository
+import com.example.bazaar.viewmodels.TimelineViewModel
+import com.example.bazaar.viewmodels.TimelineViewModelFactory
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -30,6 +32,21 @@ class AddItemFragment : Fragment() {
     private lateinit var description : String
     private lateinit var pricePerUnit : String
     private lateinit var totalAmount:  String
+    private lateinit var timelineViewModel: TimelineViewModel
+    private lateinit var username: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //username from sharedPref
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
+
+        val factory = TimelineViewModelFactory(Repository(), sharedPref!!)
+        timelineViewModel = ViewModelProvider(requireActivity(), factory).get(TimelineViewModel::class.java)
+        timelineViewModel.token = sharedPref?.getString("token", "").toString()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -85,7 +102,7 @@ class AddItemFragment : Fragment() {
         lifecycleScope.launch{
             try {
                 val result = repository.addProduct(
-                    MyApplication.token,
+                    timelineViewModel.token,
                     title,
                     description,
                     pricePerUnit,
@@ -96,7 +113,8 @@ class AddItemFragment : Fragment() {
                     "RON"
                 )
                 Log.d("xxx", "addItem: ${result}")
-
+                timelineViewModel.refreshProducts()
+                findNavController().navigate(R.id.action_addItemFragment_to_myMarketFragment)
             }catch (e: Exception) {
                 Log.d("xxx", "addItemFragment exception: ${e.toString()}")
 

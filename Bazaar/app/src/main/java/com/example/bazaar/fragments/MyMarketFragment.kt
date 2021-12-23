@@ -5,13 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bazaar.MyApplication
 import com.example.bazaar.R
 import com.example.bazaar.model.Product
 import com.example.bazaar.recyclerview.dataadapters.TimelineDataAdapter
@@ -20,9 +17,7 @@ import com.example.bazaar.viewmodels.TimelineViewModel
 import com.example.bazaar.viewmodels.TimelineViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.navigation.NavigationBarView
 import java.lang.Exception
-import java.lang.NullPointerException
 
 
 class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, TimelineDataAdapter.OnOrderButtonClickListener {

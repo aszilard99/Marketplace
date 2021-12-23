@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.bazaar.MyApplication
 import com.example.bazaar.model.LoginRequest
 import com.example.bazaar.model.User
 import com.example.bazaar.repository.Repository
@@ -21,10 +20,8 @@ class LoginViewModel(val context: Context, val repository: Repository) : ViewMod
         val request = LoginRequest(username = user.value!!.username, password = user.value!!.password)
         try {
             val result = repository.login(request)
-            MyApplication.token = result.token
-            MyApplication.username = result.username
             token.value = result.token
-            Log.d("xxx", "MyApplication - token:  ${MyApplication.token}")
+            Log.d("xxx", "MyApplication - token:  ${result.token}")
         } catch (e: Exception) {
             Log.d("xxx", "LoginViewModel - exception: ${e.toString()}")
         }

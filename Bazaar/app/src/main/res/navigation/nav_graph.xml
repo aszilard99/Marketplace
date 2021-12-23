@@ -92,7 +92,11 @@
         android:id="@+id/addItemFragment"
         android:name="com.example.bazaar.fragments.AddItemFragment"
         android:label="fragment_add_item"
-        tools:layout="@layout/fragment_add_item" />
+        tools:layout="@layout/fragment_add_item" >
+        <action
+            android:id="@+id/action_addItemFragment_to_myMarketFragment"
+            app:destination="@id/myMarketFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myProfileFragment"
         android:name="com.example.bazaar.fragments.MyProfileFragment"

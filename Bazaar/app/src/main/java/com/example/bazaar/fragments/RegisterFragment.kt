@@ -9,12 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.bazaar.MyApplication
 import com.example.bazaar.R
-import com.example.bazaar.model.LoginRequest
 import com.example.bazaar.model.RegisterRequest
 import com.example.bazaar.repository.Repository
 import kotlinx.coroutines.launch

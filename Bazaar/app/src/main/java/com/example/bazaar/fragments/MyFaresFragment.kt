@@ -4,25 +4,20 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bazaar.MyApplication
 import com.example.bazaar.R
 import com.example.bazaar.model.Order
 import com.example.bazaar.recyclerview.dataadapters.OrdersDataAdapter
-import com.example.bazaar.recyclerview.dataadapters.TimelineDataAdapter
 import com.example.bazaar.repository.Repository
 import com.example.bazaar.viewmodels.OrdersViewModel
 import com.example.bazaar.viewmodels.OrdersViewModelFactory
 import com.example.bazaar.viewmodels.TimelineViewModel
-import com.example.bazaar.viewmodels.TimelineViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.tabs.TabLayout
 
 
@@ -34,11 +29,12 @@ class MyFaresFragment : Fragment() {
     private lateinit var tabLayout : TabLayout
     private lateinit var ordersViewModel : OrdersViewModel
     private lateinit var repository: Repository
-
+    private lateinit var username : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
 
         val factory = OrdersViewModelFactory(Repository(), sharedPref!!)
         ordersViewModel = ViewModelProvider(requireActivity(), factory).get(OrdersViewModel::class.java)
@@ -70,7 +66,7 @@ class MyFaresFragment : Fragment() {
         ordersViewModel.orders.observe(viewLifecycleOwner){
             try {
                 removeUselessCharactersOrder(ordersViewModel.orders)
-                adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1.filter { it.owner_username == MyApplication.username }) }!!
+                adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1.filter { it.owner_username == username }) }!!
             }catch(e : NullPointerException){
                 Log.d("xxx-error", e.toString())
             }
@@ -106,7 +102,7 @@ class MyFaresFragment : Fragment() {
                     Log.d("xxx", "MyFaresFragment My Sales tab selected")
                     try {
                         removeUselessCharactersOrder(ordersViewModel.orders)
-                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1.filter { it.owner_username == MyApplication.username }) }!!
+                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1.filter { it.owner_username == username }) }!!
                     }catch(e : NullPointerException){
                         Log.d("xxx-error", e.toString())
                     }
@@ -116,7 +112,7 @@ class MyFaresFragment : Fragment() {
                     Log.d("xxx", "MyFaresFragment My Orders tab selected")
                     try {
                         removeUselessCharactersOrder(ordersViewModel.orders)
-                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1.filter { it.username == MyApplication.username }) }!!
+                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1.filter { it.username == username }) }!!
                     }catch(e : NullPointerException){
                         Log.d("xxx-error", e.toString())
                     }

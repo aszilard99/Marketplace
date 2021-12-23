@@ -22,6 +22,25 @@ data class LoginResponse (
 )
 
 @JsonClass(generateAdapter = true)
+data class UpdateUserItem (
+    var username: String,
+    var phone_number: Long,
+    var email: String,
+    var firebase_token : String,
+    var is_activated : Boolean,
+    var creation_time: String,
+    var token: String,
+)
+
+@JsonClass(generateAdapter = true)
+data class UpdateUserResponse (
+    var code : Int,
+    var updatedData : UpdateUserItem,
+    var timestamp : Long
+)
+
+
+@JsonClass(generateAdapter = true)
 data class RegisterRequest (
     var username: String,
     var password: String,

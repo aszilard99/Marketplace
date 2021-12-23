@@ -5,20 +5,15 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.bazaar.MyApplication
-import com.example.bazaar.model.Image
 import com.example.bazaar.model.Product
-import com.example.bazaar.model.ProductFilter
 import com.example.bazaar.repository.Repository
 import kotlinx.coroutines.launch
-import okio.ByteString.Companion.encodeUtf8
 import java.lang.Exception
-import java.net.URLEncoder
 
 class TimelineViewModel(private val repository: Repository, private val sharedPreferences: SharedPreferences) : ViewModel() {
     var products : MutableLiveData<List<Product>> = MutableLiveData()
     var currentProduct = Product(0.0, "", "", "", "",false, "", "", "", "", listOf(), 0, listOf())
-
+    var token : String = ""
     init {
         // Log.d("xxx", "ListViewModel constructor - Token: ${MyApplication.token}")
         getProducts()
