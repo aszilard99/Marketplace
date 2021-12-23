@@ -1,7 +1,9 @@
 package com.example.bazaar.fragments
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +34,9 @@ class LoginFragment : Fragment() {
         //looks for or if doesnt exist already creates a LoginViewModel with its lifecycle connected to the activity
         loginViewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
 
+
+
+
     }
 
     override fun onCreateView(
@@ -49,6 +54,10 @@ class LoginFragment : Fragment() {
         //this observers the loginViewModel's token, and if it changes it navigates to timeLineFragment
         //!!only observes the token change if we are on the LoginFragment screen, if we are on another fragment this stops/gets destroyed
         loginViewModel.token.observe(viewLifecycleOwner){
+
+            //token returned means successfull login, user data can be saved
+            saveLoginDataToSharedpreferences()
+
             findNavController().navigate(R.id.timelineFragment)
         }
 
@@ -63,24 +72,66 @@ class LoginFragment : Fragment() {
         //bottomNavigation.setVisibility(View.INVISIBLE)
         usernameET = view.findViewById(R.id.loginUsernameET)
         passwordET = view.findViewById(R.id.loginPasswordET)
+        fillInLoginDataIfExist()
+
+
         registerButton = view.findViewById(R.id.register_B_login_fragment)
         registerButton.setOnClickListener {
             findNavController().navigate(R.id.registerFragment)
         }
         loginButton = view.findViewById(R.id.loginButton)
         loginButton.setOnClickListener{
-            loginViewModel.user.value.let{
-                if (it != null) {
-                    it.username = usernameET.text.toString()
-                    it.password = passwordET.text.toString()
-                }
+            var isValid = true
+            if (usernameET.text.toString().trim().isEmpty()){
+                isValid = false
+                usernameET.setError("Username required")
             }
-            //launches Coroutine with its lifeCycle tied to LoginFragment
-            lifecycleScope.launch {
-                loginViewModel.login()
+            if (passwordET.text.toString().trim().isEmpty()){
+                isValid = false
+                passwordET.setError("Password required")
+            }
+            //only start the login process if the fields are not empty
+            if (isValid) {
+                loginProcess(usernameET.text.toString(),passwordET.text.toString())
             }
         }
     }
 
+    private fun fillInLoginDataIfExist() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        val username = sharedPref?.getString("username", "").toString()
+        val password = sharedPref?.getString("password", "").toString()
+        Log.d("xxx", "1 from sharedPref username ${username}")
+        Log.d("xxx", "1 from sharedPref password ${password}")
+        if (!username.isEmpty() && !password.isEmpty()){
+            usernameET.setText(username)
+            passwordET.setText(password)
+        }
+    }
+
+    private fun saveLoginDataToSharedpreferences() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putString("username", usernameET.text.toString())
+            putString("password", passwordET.text.toString())
+            apply()
+        }
+        Log.d("xxx", "2 from sharedPref username ${sharedPref.getString("username", "").toString()}")
+        Log.d("xxx", "2 from sharedPref password ${sharedPref.getString("password", "").toString()}")
+    }
+
+
+    private fun loginProcess(username : String, password : String){
+        loginViewModel.user.value.let {
+            if (it != null) {
+                it.username = username
+                it.password = password
+            }
+        }
+        //launches Coroutine with its lifeCycle tied to LoginFragment
+        lifecycleScope.launch {
+            loginViewModel.login()
+        }
+    }
 
 }

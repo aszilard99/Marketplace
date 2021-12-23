@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bazaar.MyApplication
 import com.example.bazaar.R
 import com.example.bazaar.model.Order
 import com.example.bazaar.recyclerview.dataadapters.OrdersDataAdapter
@@ -65,7 +66,7 @@ class MyFaresFragment : Fragment() {
         ordersViewModel.orders.observe(viewLifecycleOwner){
             try {
                 removeUselessCharactersOrder(ordersViewModel.orders)
-                adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1) }!!
+                adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1.filter { it.owner_username == MyApplication.username }) }!!
             }catch(e : NullPointerException){
                 Log.d("xxx-error", e.toString())
             }
@@ -98,10 +99,24 @@ class MyFaresFragment : Fragment() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab?.position == 0){
-                    Toast.makeText(requireContext(),"0", Toast.LENGTH_SHORT).show()
+                    Log.d("xxx", "MyFaresFragment My Sales tab selected")
+                    try {
+                        removeUselessCharactersOrder(ordersViewModel.orders)
+                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1.filter { it.owner_username == MyApplication.username }) }!!
+                    }catch(e : NullPointerException){
+                        Log.d("xxx-error", e.toString())
+                    }
+                    recyclerView.adapter = adapter
                 }
                 if (tab?.position == 1){
-                    Toast.makeText(requireContext(),"1", Toast.LENGTH_SHORT).show()
+                    Log.d("xxx", "MyFaresFragment My Orders tab selected")
+                    try {
+                        removeUselessCharactersOrder(ordersViewModel.orders)
+                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(it1.filter { it.username == MyApplication.username }) }!!
+                    }catch(e : NullPointerException){
+                        Log.d("xxx-error", e.toString())
+                    }
+                    recyclerView.adapter = adapter
                 }
             }
 
@@ -114,7 +129,7 @@ class MyFaresFragment : Fragment() {
             }
         })
     }
-
+    //TODO (refresh gombot hozzaadni hogy frissljon a recyclerview)
     //topAppbar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -124,6 +139,10 @@ class MyFaresFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId){
         R.id.profile_top_appbar_menu_item -> {
             findNavController().navigate(R.id.myProfileFragment)
+            true
+        }
+        R.id.logout_top_appbar_menu_item -> {
+            findNavController().navigate(R.id.action_myFaresFragment_to_loginFragment)
             true
         }
         else -> {

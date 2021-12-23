@@ -127,7 +127,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
 
         }
     //topAppbar
-
+    //TODO (refresh gombot hozzaadni hogy frissljon a recyclerview)
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.top_appbar_menu,menu)
@@ -136,6 +136,10 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId){
         R.id.profile_top_appbar_menu_item -> {
             findNavController().navigate(R.id.myProfileFragment)
+            true
+        }
+        R.id.logout_top_appbar_menu_item -> {
+            findNavController().navigate(R.id.action_timelineFragment_to_loginFragment)
             true
         }
         else -> {

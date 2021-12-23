@@ -19,13 +19,13 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/my_orders"
+            android:text="@string/my_sales"
             />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/my_fares"
+            android:text="@string/my_orders"
             />
 
     </com.google.android.material.tabs.TabLayout>

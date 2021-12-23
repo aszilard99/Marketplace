@@ -4,6 +4,16 @@
     <item
         android:id="@+id/profile_top_appbar_menu_item"
         android:icon="@drawable/ic_self_foreground"
+        android:title="Search"
+         />
+    <item
+        android:id="@+id/search_top_appbar_menu_item"
+        android:icon="@drawable/ic_self_foreground"
         android:title="profile"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/logout_top_appbar_menu_item"
+        android:icon="@drawable/ic_self_foreground"
+        android:title="Log Out"
+         />
 </menu>
