@@ -75,14 +75,22 @@ class ItemDetailsFragment : Fragment() {
         price_per_unit.text = timelineViewModel.currentProduct.price_per_unit
         description.text = timelineViewModel.currentProduct.description
 
+        order_button = view.findViewById(R.id.order_button_itemdetails_fragment)
+        order_button.setOnClickListener {
+            withEditText(view)
+        }
         //if the product is not the user's then hide the remove product button
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
         val username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
         if (username != owner.text){
             removeButton.setVisibility(View.INVISIBLE)
+            order_button.setVisibility(View.VISIBLE)
         }else{
             removeButton.setVisibility(View.VISIBLE)
+            order_button.setVisibility(View.INVISIBLE)
         }
+
+
         removeButton.setOnClickListener{
             val product_id = timelineViewModel.currentProduct.product_id
 
@@ -101,10 +109,7 @@ class ItemDetailsFragment : Fragment() {
         }
 
         //TODO properly implementing order process
-        order_button = view.findViewById(R.id.order_button_itemdetails_fragment)
-        order_button.setOnClickListener {
-            withEditText(view)
-        }
+
 
 
 

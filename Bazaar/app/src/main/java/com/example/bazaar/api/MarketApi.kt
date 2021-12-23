@@ -59,8 +59,10 @@ interface MarketApi {
     suspend fun updateUser(
         @Header ("token") token : String,
         @Part ("phone_number") phone_number : String,
+        @Part("email") email : String,
         @Part ("username") username : String
     ): UpdateUserResponse
+
 
     @GET(Constants.GET_ORDERS_URL)
     suspend fun getOrders(@Header ("token") token: String, @Header ("limit") limit : Int) : OrderResponse

@@ -72,27 +72,31 @@ class MyProfileFragment : Fragment() {
             }
             if (isValid) {
                 lifecycleScope.launch {
-                    try {
-                        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-                        val token = sharedPref?.getString("token", "").toString()
-
-                        val username = usernameET.text.toString()
-                        val phone = phoneET.text.toString()
-
-                        val response = repo.updateUser(token, username, phone)
-
-                        Log.d("xxx", "myProfileFragment, userUpdate done, new token : ${response.updatedData.token}")
-                        sharedPref?.edit()?.putString("token", response.updatedData.token)
-                        sharedPref?.edit()?.putString("username", response.updatedData.username)
-                        usernameTextView.text = response.updatedData.username
-                    }catch(e: Exception){
-
-                    }
+                    updateUserProcess()
                 }
             }
         }
 
 
+    }
+
+    suspend fun updateUserProcess(){
+        try {
+            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+            val token = sharedPref?.getString("token", "").toString()
+
+            val username = usernameET.text.toString()
+            val phone = phoneET.text.toString()
+            val email = "$username" + "@gmail.com"
+            val response = repo.updateUser(token, username,email, phone)
+
+            Log.d("xxx", "myProfileFragment, userUpdate done, new token : ${response.updatedData.token}")
+            sharedPref?.edit()?.putString("token", response.updatedData.token)
+            sharedPref?.edit()?.putString("username", response.updatedData.username)
+            usernameTextView.text = response.updatedData.username
+        }catch(e: Exception){
+
+        }
     }
 
 }
