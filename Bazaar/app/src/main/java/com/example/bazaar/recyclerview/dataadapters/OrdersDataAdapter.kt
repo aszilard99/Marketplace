@@ -10,23 +10,58 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bazaar.R
 import com.example.bazaar.model.Order
 
-class OrdersDataAdapter(private val username: String, private val orderList: List<Order>) : RecyclerView.Adapter<OrdersDataAdapter.DataViewHolder>() {
+class OrdersDataAdapter(private val username: String, private val orderList: List<Order>, private val listener: OrdersDataAdapter.OnItemClickListener, private val orderListener: OrdersDataAdapter.OnAcceptButtonClickListener) : RecyclerView.Adapter<OrdersDataAdapter.DataViewHolder>() {
 
     var  createCounter: Int = 0
     var bindCounter: Int = 0
 
-    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+    }
+    //the fragment that contains the recyclerView will extend this interface,
+    // delegating the task to the fragment from the DataAdapter
+    interface OnAcceptButtonClickListener{
+        fun onAcceptButtonClick(position: Int)
+    }
+
+
+    interface myOnClickListener : View.OnClickListener {
+        fun OnAcceptClick(position: Int)
+    }
+
+
+    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+        , View.OnClickListener, OrdersDataAdapter.myOnClickListener {
         val ownerTV: TextView = itemView.findViewById(R.id.myFaresItemOwnerTV)
         val titleTV: TextView = itemView.findViewById(R.id.myFaresItemTitleTV)
         val availabilityTV: TextView = itemView.findViewById(R.id.myFaresAvailabilityTV)
         val messagesTV : TextView = itemView.findViewById(R.id.myFaresMessagesTV)
         val amountTV : TextView = itemView.findViewById(R.id.myFaresAmountTV)
         val acceptButton : Button = itemView.findViewById(R.id.order_layout_accept_order_button)
-        val declineButton : Button = itemView.findViewById(R.id.order_layout_decline_order_button)
-        init {
 
+        val declineButton : Button = itemView.findViewById(R.id.order_layout_decline_order_button)
+
+        init {
+            acceptButton.setOnClickListener {
+                OnAcceptClick(this.adapterPosition)
+            }
         }
+
+        override fun OnAcceptClick(position: Int) {
+            Log.d("xxx", "AdapterPosition: $position")
+            orderListener.onAcceptButtonClick(position)
+        }
+
+        override fun onClick(p0: View?) {
+            val currentPosition = this.adapterPosition
+
+            Log.d("xxx", "AdapterPosition: $currentPosition")
+            listener.onItemClick(currentPosition)
+        }
+
+
     }
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersDataAdapter.DataViewHolder {

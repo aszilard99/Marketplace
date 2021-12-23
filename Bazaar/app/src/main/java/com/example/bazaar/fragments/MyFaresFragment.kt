@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bazaar.R
 import com.example.bazaar.model.Order
 import com.example.bazaar.recyclerview.dataadapters.OrdersDataAdapter
+import com.example.bazaar.recyclerview.dataadapters.TimelineDataAdapter
 import com.example.bazaar.repository.Repository
 import com.example.bazaar.viewmodels.OrdersViewModel
 import com.example.bazaar.viewmodels.OrdersViewModelFactory
@@ -21,7 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 
 
-class MyFaresFragment : Fragment() {
+class MyFaresFragment : Fragment(),OrdersDataAdapter.OnItemClickListener, OrdersDataAdapter.OnAcceptButtonClickListener {
     private lateinit var timelineViewModel: TimelineViewModel
     private lateinit var adapter: OrdersDataAdapter
     private lateinit var recyclerView: RecyclerView
@@ -51,11 +53,13 @@ class MyFaresFragment : Fragment() {
         return view
     }
 
+
+
     private fun initializeView(view: View) {
         //topAppbar
         setHasOptionsMenu(true)
         tabLayout = view.findViewById(R.id.tab_layout)
-        setupTabLayout()
+        setupTabLayout(this)
 
         recyclerView = view.findViewById(R.id.recycler_view_myfares)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -67,7 +71,7 @@ class MyFaresFragment : Fragment() {
                 removeUselessCharactersOrder(ordersViewModel.orders)
                 val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
                 val username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
-                adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(username, it1.filter { it.owner_username == username }) }!!
+                adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(username, it1.filter { it.owner_username == username },this,this) }!!
             }catch(e : NullPointerException){
                 Log.d("xxx-error", e.toString())
             }
@@ -77,6 +81,25 @@ class MyFaresFragment : Fragment() {
 
     }
 
+    override fun onItemClick(position: Int) {
+
+        Log.d("xxx", "AdapterPosition: $position")
+    }
+
+    override fun onAcceptButtonClick(position: Int) {
+
+        try {
+            Log.d("xxx", "accept button task delegation success: $position")
+            Toast.makeText(requireContext(),"accept button task delegation success: $position", Toast.LENGTH_LONG).show()
+
+            //withEditText(requireView())
+        }catch(e: java.lang.NullPointerException){
+            Log.d("xxx", "on Order Button click")
+        }
+
+
+
+    }
 
     private fun removeUselessCharactersOrder(orders: MutableLiveData<List<Order>>) {
         try {
@@ -95,7 +118,7 @@ class MyFaresFragment : Fragment() {
     }
 
 
-    fun setupTabLayout(){
+    fun setupTabLayout(fragment : MyFaresFragment){
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
             val username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
@@ -104,7 +127,7 @@ class MyFaresFragment : Fragment() {
                     Log.d("xxx", "MyFaresFragment My Sales tab selected")
                     try {
                         removeUselessCharactersOrder(ordersViewModel.orders)
-                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(username, it1.filter { it.owner_username == username }) }!!
+                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(username, it1.filter { it.owner_username == username },fragment,fragment) }!!
                     }catch(e : NullPointerException){
                         Log.d("xxx-error", e.toString())
                     }
@@ -114,7 +137,7 @@ class MyFaresFragment : Fragment() {
                     Log.d("xxx", "MyFaresFragment My Orders tab selected")
                     try {
                         removeUselessCharactersOrder(ordersViewModel.orders)
-                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(username, it1.filter { it.username == username }) }!!
+                        adapter = ordersViewModel.orders.value?.let { it1 -> OrdersDataAdapter(username, it1.filter { it.username == username },fragment,fragment) }!!
                     }catch(e : NullPointerException){
                         Log.d("xxx-error", e.toString())
                     }
@@ -157,4 +180,6 @@ class MyFaresFragment : Fragment() {
         }
 
     }
+
+
 }
