@@ -43,11 +43,15 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
     private lateinit var clearButton : Button
     private lateinit var searchET : EditText
     private lateinit var repository : Repository
-
+    private lateinit var username: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = TimelineViewModelFactory(Repository())
         timelineViewModel = ViewModelProvider(requireActivity(), factory).get(TimelineViewModel::class.java)
+
+        //username from sharedPref
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
     }
 
     override fun onCreateView(
@@ -91,7 +95,7 @@ class TimelineFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
         timelineViewModel.products.observe(viewLifecycleOwner){
             try {
                 removeUselessCharactersProduct(timelineViewModel.products)
-                adapter = timelineViewModel.products.value?.let { it1 -> TimelineDataAdapter(it1,this, this) }!!
+                adapter = timelineViewModel.products.value?.let { it1 -> TimelineDataAdapter(username, it1,this, this) }!!
             }catch(e : NullPointerException){
                 Log.d("xxx-error", e.toString())
             }

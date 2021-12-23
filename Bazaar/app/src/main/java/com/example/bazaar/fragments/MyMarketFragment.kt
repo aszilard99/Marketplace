@@ -1,5 +1,6 @@
 package com.example.bazaar.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bazaar.MyApplication
 import com.example.bazaar.R
+import com.example.bazaar.model.Product
 import com.example.bazaar.recyclerview.dataadapters.TimelineDataAdapter
 import com.example.bazaar.repository.Repository
 import com.example.bazaar.viewmodels.TimelineViewModel
@@ -26,14 +28,20 @@ import java.lang.NullPointerException
 class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, TimelineDataAdapter.OnOrderButtonClickListener {
 
     private lateinit var timelineViewModel: TimelineViewModel
+    private lateinit var list : List<Product>
     private lateinit var recyclerView: RecyclerView
     private lateinit var bottomNavigation: BottomNavigationView
     private lateinit var adapter : TimelineDataAdapter
     private lateinit var addItemButton : FloatingActionButton
+    private lateinit var username : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = TimelineViewModelFactory(Repository())
         timelineViewModel = ViewModelProvider(requireActivity(), factory).get(TimelineViewModel::class.java)
+
+        //username from sharedPreferences
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
     }
 
     override fun onCreateView(
@@ -56,15 +64,19 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
         //topAppbar
         setHasOptionsMenu(true)
 
+        //shared preferences for getting the username
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        val username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
+
         recyclerView = view.findViewById(R.id.recycler_view_my_market)
 
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.setHasFixedSize(true)
         try {
-            val list = timelineViewModel.products.value?.filter {
-                it.username == MyApplication.username
-            }
-            adapter = TimelineDataAdapter(list!!, this,this)
+            list = timelineViewModel.products.value?.filter {
+                it.username == username
+            }!!
+            adapter = TimelineDataAdapter(username, list!!, this,this)
             recyclerView.adapter = adapter
         }catch(e: Exception){
             Log.d("xxx", "myMarketFragment - adapter input list null")
@@ -82,7 +94,8 @@ class MyMarketFragment : Fragment(), TimelineDataAdapter.OnItemClickListener, Ti
 
     override fun onItemClick(position: Int) {
         try {
-            timelineViewModel.currentProduct = timelineViewModel.products.value!!.get(position)
+            //timelineViewModel.currentProduct = timelineViewModel.products.value!!.get(position)
+            timelineViewModel.currentProduct = list.get(position)
             Log.d("xxx", timelineViewModel.currentProduct.toString())
         }catch(e: java.lang.NullPointerException){
 

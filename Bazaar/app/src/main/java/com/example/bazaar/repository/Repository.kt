@@ -10,6 +10,10 @@ class Repository {
         return RetrofitInstance.api.login(request)
     }
 
+    suspend fun register(request: RegisterRequest) : RegisterResponse {
+        return RetrofitInstance.api.register(request)
+    }
+
     suspend fun getProducts(token: String, limit : Int) : ProductResponse {
         return RetrofitInstance.api.getProducts(token, limit)
     }
@@ -33,4 +37,6 @@ class Repository {
     suspend fun getOrders(token : String, limit: Int) : OrderResponse {
         return RetrofitInstance.api.getOrders(token, limit)
     }
+
+
 }

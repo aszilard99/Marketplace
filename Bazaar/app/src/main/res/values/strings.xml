@@ -5,4 +5,6 @@
     <string name="my_orders">My Orders</string>
     <string name="my_fares">My Fares</string>
     <string name="my_sales">My sales</string>
+    <string name="username_sharedpreferences_string_resource">username</string>
+    <string name="password_sharedpreferences_string_resource">password</string>
 </resources>

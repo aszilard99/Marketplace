@@ -1,5 +1,6 @@
 package com.example.bazaar.recyclerview.dataadapters
 
+import android.content.Context
 import android.opengl.Visibility
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,10 +15,12 @@ import com.example.bazaar.MyApplication
 import com.example.bazaar.R
 import com.example.bazaar.model.Product
 
-class TimelineDataAdapter(private val productList: List<Product>, private val listener: OnItemClickListener, private val orderListener: OnOrderButtonClickListener) : RecyclerView.Adapter<TimelineDataAdapter.DataViewHolder>() {
+class TimelineDataAdapter(private val username: String ,private val productList: List<Product>, private val listener: OnItemClickListener, private val orderListener: OnOrderButtonClickListener) : RecyclerView.Adapter<TimelineDataAdapter.DataViewHolder>() {
 
     var  createCounter: Int = 0
     var bindCounter: Int = 0
+
+
 
     interface OnItemClickListener{
         fun onItemClick(position: Int)
@@ -80,11 +83,13 @@ class TimelineDataAdapter(private val productList: List<Product>, private val li
         holder.titleTV.text = currentItem.title
 
 
-        if (currentItem.username == MyApplication.username) {
+
+
+        if (currentItem.username == username) {
             holder.orderButton.setVisibility(View.INVISIBLE)
 
         }
-        if (currentItem.username != MyApplication.username) {
+        if (currentItem.username != username) {
             holder.orderButton.setVisibility(View.VISIBLE)
 
         }

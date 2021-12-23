@@ -27,6 +27,10 @@ data class Product(
 @JsonClass(generateAdapter = true)
 data class ProductResponse(val item_count: Int, val products: List<Product>, val timestamp: Long)
 
+
+@JsonClass(generateAdapter = true)
+data class DeleteProductResponse(val message: String, val product_id: String, val deletion_time: Long)
+
 @JsonClass(generateAdapter = true)
 data class AddProductResponse(
     val creation : String,

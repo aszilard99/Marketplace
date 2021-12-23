@@ -1,5 +1,6 @@
 package com.example.bazaar.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -28,11 +28,9 @@ class ItemDetailsFragment : Fragment() {
     private lateinit var timelineViewModel : TimelineViewModel
     private lateinit var productList : List<Product>
     private lateinit var order_button : Button
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private lateinit var removeButton : Button
 
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +58,22 @@ class ItemDetailsFragment : Fragment() {
         owner = view.findViewById(R.id.ownerTV)
         price_per_unit = view.findViewById(R.id.pricePerUnitTV)
         description = view.findViewById(R.id.descriptionTV)
+        removeButton = view.findViewById(R.id.remove_button_itemdetails_fragment)
+
+        title.text = timelineViewModel.currentProduct.title
+        owner.text = timelineViewModel.currentProduct.username
+        price_per_unit.text = timelineViewModel.currentProduct.price_per_unit
+        description.text = timelineViewModel.currentProduct.description
+
+        //if the product is not the user's then hide the remove product button
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        val username = sharedPref?.getString(getString(R.string.username_sharedpreferences_string_resource), "").toString()
+        if (username != owner.text){
+            removeButton.setVisibility(View.INVISIBLE)
+        }else{
+            removeButton.setVisibility(View.VISIBLE)
+        }
+
 
         //TODO properly implementing order process
         order_button = view.findViewById(R.id.order_button_itemdetails_fragment)
@@ -68,10 +82,7 @@ class ItemDetailsFragment : Fragment() {
         }
 
 
-        title.text = timelineViewModel.currentProduct.title
-        owner.text = timelineViewModel.currentProduct.username
-        price_per_unit.text = timelineViewModel.currentProduct.price_per_unit
-        description.text = timelineViewModel.currentProduct.description
+
 
     }
 
